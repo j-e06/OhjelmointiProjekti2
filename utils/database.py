@@ -1,6 +1,8 @@
 import mariadb
 
+
 # Database Context Manager
+
 class Database:
     def __init__(self, **config):
         self.config = config
@@ -20,6 +22,19 @@ class Database:
         if self.connection:
             self.connection.close()
 
+
+def run_sql_file(cursor, file_path: str) -> None:
+    """
+    Reads a SQL file and executes its contents using the provided cursor.
+    """
+    with open(file_path, "r") as sql_file:
+        sql_commands = sql_file.read()
+
+        for command in sql_commands.split(";"):
+            command = command.strip()
+
+            if command:
+                cursor.execute(command)
 
 def execute_query(cursor: mariadb.Cursor, query, params=None, fetch=True):
     """

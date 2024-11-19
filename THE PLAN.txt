@@ -12,7 +12,7 @@ password (for saving game): varchar
 starting_airport: varchar
 location: varchar
 money: int
-range: float
+fuel: float
 diamond (diamond found true/false): bool
 
 game_airports:
@@ -20,7 +20,6 @@ id: primary_key: int
 airport_id: foreign key to airport ident
 lootbox_status: opened/closed = true/false
 lootbox_id: foreign key references goals table
-primary_key = id: int 
 
 goals table:
 values:
