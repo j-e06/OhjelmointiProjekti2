@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `game`(
     fuel_used float,
     lootboxes_opened int,
     flights_taken int,
-    diamond bool,
+    diamond int,
 
     foreign key (starting_airport) references airport(ident),
     foreign key (location) references airport(ident)
@@ -30,19 +30,20 @@ CREATE TABLE IF NOT EXISTS `game_airports`(
 
 );
 
-CREATE TABLE IF NOT EXISTS `goals`(
+CREATE TABLE IF NOT EXISTS `lootboxes`(
     id int primary key not null auto_increment,
     reward int,
     rarity varchar(64),
+    spawn_weight int(64),
     goal_name varchar(64),
-    UNIQUE(reward, rarity, goal_name)
+    UNIQUE(reward, rarity, spawn_weight, goal_name)
 );
 
-INSERT IGNORE INTO `goals` (reward,rarity, goal_name) VALUES
-    (300, "Common", "Topaz"),
-    (600, "Rare", "Emerald"),
-    (1000, "Epic", "Ruby"),
-    (0, "Very common", "Milk"),
-    (-1, "Very rare", "Robber"),
-    (1, "Legendary", "Diamond");
+INSERT IGNORE INTO `lootboxes` (reward,rarity,spawn_weight, goal_name) VALUES
+    (300, "Common", 10, "Topaz"),
+    (600, "Rare",7 , "Emerald"),
+    (1000, "Epic" ,5, "Ruby"),
+    (0, "Very common",15 , "Milk"),
+    (-1, "Very rare",2 , "Robber"),
+    (1, "Legendary",1 , "Diamond");
 set foreign_key_checks = 1;

@@ -89,3 +89,16 @@ amount of fuel used
 something related to kestävä kehitys based on fuel used
 amount of flights taken
 amount of lootboxes opened
+
+
+
+TODO:
+Informaation funktiot pythonissa
+Flaskin endpointtien tekeminen (haetaan tietoa tietokannasta.)
+
+
+
+
+
+
+

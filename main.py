@@ -1,12 +1,15 @@
 from utils.database import *
 from utils.airports import *
 import mariadb
+
+from utils.game import create_game
+
 config = {
     "host": "127.0.0.1",
-    "port": 3307,
+    "port": 3306,
     "database": "project",
     "user": "root",
-    "password": "root",
+    "password": "potatoman",
     "autocommit": True
 }
 
@@ -20,6 +23,11 @@ def main(connection_config, file_path):
 
         print(f"Database setup complete.")
 
+        print("Testing creation of game_airports....")
+        name = "Jani"
+        password = "Test"
+
+        create_game(cursor, name, password)
 
 if __name__ == "__main__":
     main(config, SQL_FILE_PATH)
