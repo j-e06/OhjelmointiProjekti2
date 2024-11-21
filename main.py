@@ -23,7 +23,7 @@ def main(connection_config, file_path):
 
         print(f"Database setup complete.")
 
-        print("Testing creation of game_airports....")
+        print("Testing creation of game_airports...")
         name = "Jani"
         password = "Test"
 

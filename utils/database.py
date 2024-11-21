@@ -45,7 +45,7 @@ def execute_query(cursor: mariadb.Cursor, query, params=None, fetch=True):
         query (str): SQL query to execute.
         params (tuple): Optional parameters for the query.
         fetch (bool): Whether to fetch results (default: True).
-
+test
     Returns:
         list: Query results if fetch is True.
         None: If fetch is False.

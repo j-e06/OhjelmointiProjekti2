@@ -92,7 +92,7 @@ amount of lootboxes opened
 
 
 
-TODO:
+dTODO:
 Informaation funktiot pythonissa
 Flaskin endpointtien tekeminen (haetaan tietoa tietokannasta.)
 

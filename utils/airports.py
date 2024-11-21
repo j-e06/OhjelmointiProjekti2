@@ -37,6 +37,8 @@ def get_all_airports(cursor, game_id: int) -> list:
     Returns all airports from database that can be found in the given airports list
     (airports table should only contain the idents (icao-codes) of the airports)
     """
+    #test
+
     test = "SELECT airport.* FROM airport INNER JOIN game_airports ON airport.ident = game_airports.airport_id WHERE game_airports.game_id = %s;"
     sql = "SELECT * from airport where continent = 'EU' AND type ='large_airport'"
 

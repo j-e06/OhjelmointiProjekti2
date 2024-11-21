@@ -43,7 +43,7 @@ def create_lootboxes(cursor: mariadb.Cursor, game_id,game_airports:list):
 
     selected_ids = sample(weighted_ids, 29)
     selected_ids.append(diamond_id)
-
+    #test
     shuffle(selected_ids)
 
     t = []

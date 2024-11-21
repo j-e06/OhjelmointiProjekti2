@@ -42,6 +42,7 @@ def create_game(cursor: mariadb.Cursor, name, password) -> int:
     )
     data = (
     name, password, starting_airport['ident'], location['ident'], money, fuel, fuel_used, lootboxes_opened, flights_taken, diamond)
+    #test
 
     #print(data)
     execute_query(cursor,sql,data, fetch=False)
