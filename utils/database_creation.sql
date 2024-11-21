@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `game_airports`(
 
     foreign key (game_id) references game(game_id),
     foreign key (airport_id) references airport(ident),
-    foreign key (lootbox_id) references goals(id)
+    foreign key (lootbox_id) references lootboxes(id)
 
 );
 
