@@ -6,19 +6,23 @@ from utils.game import *
 from utils.lootboxes import *
 from utils.airports import *
 
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 config = {
-    "host": "127.0.0.1",
-    "port": 3306,
-    "database": "project",
-    "user": "root",
-    "password": "potatoman",
+    "host": os.getenv('host'),
+    "port": int(os.getenv('port')),
+    "database": os.getenv('database'),
+    "user": os.getenv('user'),
+    "password": os.getenv('password'),
     "autocommit": True
 }
 
-SQL_FILE_PATH = "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/database_creation.sql"
-RESET_FILE_PATH = "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/reset_db.sql"
-
+SQL_FILE_PATH = os.getenv('sql_file_path')
+RESET_FILE_PATH = os.getenv('reset_file_path')
 
 
 app = Flask(__name__)
@@ -43,10 +47,13 @@ def create_new_name():
     password = args.get("password")
     if not name or not password:
         return jsonify({"error": "Missing 'name' or 'password'"}), 400
-    # print(cursor)
-    # return f"<li>{type(cursor), str(cursor)}</li>"
-    game_id = create_game(cursor, name, password)
-    return jsonify({"game_id": game_id}), 200
+
+    game_id = create_game(cursor, name.strip(), password.strip())
+
+    game_details = get_game_details(cursor, game_id)
+
+    return jsonify(game_details), 200
+
 
 
 app.run(debug=True)
