@@ -9,18 +9,18 @@ import mariadb
 
 from utils.game import get_game_details, create_game, fly, save_game, check_game_state, buy_fuel
 
+
 config = {
     "host": "127.0.0.1",
-    "port": 3306,
+    "port": 3307,
     "database": "project",
     "user": "root",
-    "password": "potatoman",
+    "password": "root",
     "autocommit": True
 }
 
 SQL_FILE_PATH = "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/database_creation.sql"
 RESET_FILE_PATH = "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/reset_db.sql"
-
 
 
 def main(connection_config, file_path, reset_path):

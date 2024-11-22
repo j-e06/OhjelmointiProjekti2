@@ -7,6 +7,7 @@ from random import choice
 from utils.CONSTANTS import DEFAULT_FUEL_AMOUNT, DEFAULT_MONEY_AMOUNT, FUEL_TO_MONEY_RATIO
 
 
+
 def get_game_details(cursor, game_id: int):
     """
     Returns all information for given game
@@ -92,6 +93,7 @@ def fly(cursor, game_id: int, icao_code: str):
         return False
 
 
+
 def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
     set_clauses = [f"{column} = {value}" if isinstance(value, (int, float)) else f"{column} = '{value}'"
                    for column, value in zip(to_update, information)]
@@ -106,6 +108,7 @@ def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
     execute_query(cursor, test, fetch=False)
 
     return True
+
 
 
 def check_game_state(cursor, game_id: int):

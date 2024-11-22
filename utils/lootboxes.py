@@ -50,6 +50,7 @@ from utils.CONSTANTS import DEFAULT_AIRPORT_COUNT
 #         pass
 
 
+
 def get_lootboxes(cursor):
     """
     :param cursor:
@@ -58,7 +59,6 @@ def get_lootboxes(cursor):
     """
     sql = "SELECT * from lootboxes"
     return execute_query(cursor, sql)
-
 
 def get_lootbox(cursor, primary_id: int):
     """
