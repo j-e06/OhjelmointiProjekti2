@@ -80,14 +80,14 @@ def get_distance(cursor, icao1: str, icao2: str):
     :return: The distance between the first and second airport
     """
     if not valid_airport(cursor, icao1) or not valid_airport(cursor, icao2):
-        return "Invalid ICAO-codes."
+        return {"error": "Invalid ICAO-codes."}, 400
 
     airport1 = get_airport_info(cursor, icao1)[0]
     airport2 = get_airport_info(cursor, icao2)[0]
     a_xy = (airport1["latitude_deg"], airport1["longitude_deg"])
     b_xy = (airport2["latitude_deg"], airport2["longitude_deg"])
 
-    return distance.distance(a_xy, b_xy).km
+    return {"distance": distance.distance(a_xy, b_xy).km},200
 
 
 def accessible_airports(cursor, icao: str, fuel: float, game_id: int):
@@ -107,4 +107,4 @@ def accessible_airports(cursor, icao: str, fuel: float, game_id: int):
         distance_from_port = get_distance(cursor, icao, port['ident'])
         if fuel >= distance_from_port > 1:
             available.append(port)
-    return available
+    return {"airports": available}, 200

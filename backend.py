@@ -55,7 +55,7 @@ def get_airport_information():
         return jsonify({"error": f"Unables to get information for said airport for game {game_id}"}), 400
 
 @app.route('/api/create_new_game', methods=['GET'])
-def create_new_name():
+def create_new_game():
     cursor = g.cursor
 
     args = request.args

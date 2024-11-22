@@ -7,7 +7,6 @@ from random import choice
 from utils.CONSTANTS import DEFAULT_FUEL_AMOUNT, DEFAULT_MONEY_AMOUNT, FUEL_TO_MONEY_RATIO
 
 
-
 def get_game_details(cursor, game_id: int):
     """
     Returns all information for given game
@@ -22,7 +21,7 @@ def get_game_details(cursor, game_id: int):
     if len(result) == 0:
         return None
     else:
-        return result
+        return {"result": result}, 200
 
 
 def create_game(cursor, name, password) -> int:
@@ -52,7 +51,7 @@ def create_game(cursor, name, password) -> int:
 
     create_lootboxes(cursor, game_id, game_airports)
 
-    return game_id
+    return {"game_id": game_id}, 200
 
 
 def fly(cursor, game_id: int, icao_code: str):
@@ -93,6 +92,36 @@ def fly(cursor, game_id: int, icao_code: str):
         return False
 
 
+def login(cursor, name, password):
+    if name == "noreg" and password == "noreg":
+        # playing as guest, create random login and password for game.
+        name = "BLANK"
+        password = "BLANK"
+        return {"game_id":create_game(cursor, name, password)}, 200
+
+    sql = "SELECT game_id from game where name = '%s' AND password = '&s'"
+
+    result = execute_query(cursor, sql, (name, password))
+
+    if len(result) == 0:
+        return False
+    else:
+        return {"game_id": result[0]['game_id']}, 200
+
+
+def register(cursor, name, password):
+    sql = "SELECT game_id from game where name = '%s' AND password ='%s'"
+
+    result = execute_query(cursor, sql, (name, password))
+
+    if len(result) >= 1:
+        # an account with that name and password already exists, please redirect them to either continue game
+        # or delete previous game
+        return [res['game_id'] for res in result]
+    else:
+        game_id = create_game(cursor, name, password)
+        return {"game_id": game_id}, 200
+
 
 def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
     set_clauses = [f"{column} = {value}" if isinstance(value, (int, float)) else f"{column} = '{value}'"
@@ -108,7 +137,6 @@ def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
     execute_query(cursor, test, fetch=False)
 
     return True
-
 
 
 def check_game_state(cursor, game_id: int):
@@ -147,7 +175,7 @@ def buy_fuel(cursor, game_id: int, amount: int):
     money = game_details['money']
     # print(money,fuel, amount, amount*2)
     if amount * 2 > money:
-        return False
+        return {"error": "Not enough money"}, 400
 
     new_fuel_count = fuel + amount
     new_money_count = money - amount * FUEL_TO_MONEY_RATIO
@@ -156,4 +184,4 @@ def buy_fuel(cursor, game_id: int, amount: int):
     if result:
         return True
     else:
-        return False
+        return {"error": f"Unable to save game, error: {result}"}, 400
