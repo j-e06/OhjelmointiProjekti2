@@ -40,7 +40,6 @@ def get_airport_info(cursor, code: str, game_id: int = None):
     """
     if not valid_airport(cursor, code):
         return "Invalid ICAO-code"
-
     if game_id is None:
         sql = "SELECT * from airport where ident = %s"
 

@@ -1,7 +1,6 @@
 import json
 from flask import Flask, request
 
-from old.utils.airports import create_game_airports
 from utils.database import Database, execute_query, run_sql_file
 # from utils.airports import accessible_airports, get_distance, valid_airport, get_airport_info, \
 #    get_all_airports, create_game_airports
