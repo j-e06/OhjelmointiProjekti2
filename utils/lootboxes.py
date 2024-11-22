@@ -70,7 +70,7 @@ def get_lootbox(cursor, primary_id: int):
     sql = "SELECT * from lootboxes where id = %s"
 
     result = execute_query(cursor, sql, (primary_id,))
-    return result if len(result) > 0 else "No goal with that primary id"
+    return result if len(result) > 0 else False
 
 
 def create_lootboxes(cursor: mariadb.Cursor, game_id, game_airports: list):

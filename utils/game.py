@@ -87,9 +87,9 @@ def fly(cursor, game_id: int, icao_code: str):
 
         save_game(cursor, game_id, ('fuel', 'location', 'flights_taken', 'fuel_used'),
                   (fuel, location, flights_taken, fuel_used))
-        return "Flight successful!"
+        return True
     else:
-        return f"Not enough fuel for flight. Fuel needed: {distance_between_ports}, fuel owned: {fuel}"
+        return False
 
 
 def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
@@ -144,7 +144,7 @@ def buy_fuel(cursor, game_id: int, amount: int):
     money = game_details['money']
     # print(money,fuel, amount, amount*2)
     if amount * 2 > money:
-        return True
+        return False
 
     new_fuel_count = fuel + amount
     new_money_count = money - amount * FUEL_TO_MONEY_RATIO
