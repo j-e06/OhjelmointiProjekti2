@@ -52,7 +52,7 @@ def get_airport_information():
     if len(information) > 0:
         return jsonify(information), 200
     else:
-        return jsonify({"error": f"Unable to get information for said airport for game {game_id}"}), 400
+        return jsonify({"error": f"Unables to get information for said airport for game {game_id}"}), 400
 
 @app.route('/api/create_new_game', methods=['GET'])
 def create_new_name():
