@@ -3,51 +3,52 @@ from random import sample, shuffle
 
 from utils.database import execute_query
 from utils.airports import get_airport_info, valid_airport
-from utils.game import get_game_details
+# from utils.game import get_game_details
 from utils.CONSTANTS import DEFAULT_AIRPORT_COUNT
 
 
-def open_lootbox(cursor, game_id):
-    game_details = get_game_details(cursor, game_id)[0]
+# def open_lootbox(cursor, game_id):
+#     game_details = get_game_details(cursor, game_id)[0]
+#
+#     airport_info = get_airport_info(cursor, game_id, game_details['ident'])
+#
+#     if airport_info['lootbox_status'] != 0:
+#         return f"Lootbox for airport {airport_info['ident']} has already been opened. " \
+#                f"Lootbox id was: {airport_info['lootbox_id']}"
+#
+#     lootbox_info = get_lootbox(cursor, airport_info['lootbox_id'])
+#
+#     lootbox_id = lootbox_info['id']
+#
+#     if lootbox_id == 1:
+#         money = int(game_details['money']) + int(lootbox_info['reward'])
+#         # topaz
+#         pass
+#     elif lootbox_id == 2:
+#         money = int(game_details['money']) + int(lootbox_info['reward'])
+#         # emerald
+#         pass
+#     elif lootbox_id == 3:
+#         money = int(game_details['money']) + int(lootbox_info['reward'])
+#         # ruby
+#         pass
+#     elif lootbox_id == 4:
+#         # milk
+#         # return "You found milk! Nothing happens."
+#         pass
+#     elif lootbox_id == 5:
+#         # robber
+#         money = 0
+#
+#         pass
+#     elif lootbox_id == 6:
+#         # diamond
+#
+#         pass
+#     else:
+#         # this should *not* be accessible.
+#         pass
 
-    airport_info = get_airport_info(cursor, game_id, game_details['ident'])
-
-    if airport_info['lootbox_status'] != 0:
-        return f"Lootbox for airport {airport_info['ident']} has already been opened. " \
-               f"Lootbox id was: {airport_info['lootbox_id']}"
-
-    lootbox_info = get_lootbox(cursor, airport_info['lootbox_id'])
-
-    lootbox_id = lootbox_info['id']
-
-    if lootbox_id == 1:
-        money = int(game_details['money']) + int(lootbox_info['reward'])
-        # topaz
-        pass
-    elif lootbox_id == 2:
-        money = int(game_details['money']) + int(lootbox_info['reward'])
-        # emerald
-        pass
-    elif lootbox_id == 3:
-        money = int(game_details['money']) + int(lootbox_info['reward'])
-        # ruby
-        pass
-    elif lootbox_id == 4:
-        # milk
-        # return "You found milk! Nothing happens."
-        pass
-    elif lootbox_id == 5:
-        # robber
-        money = 0
-
-        pass
-    elif lootbox_id == 6:
-        # diamond
-
-        pass
-    else:
-        # this should *not* be accessible.
-        pass
 
 
 def get_lootboxes(cursor):
@@ -59,7 +60,6 @@ def get_lootboxes(cursor):
     sql = "SELECT * from lootboxes"
     return execute_query(cursor, sql)
 
-
 def get_lootbox(cursor, primary_id: int):
     """
 
@@ -70,7 +70,7 @@ def get_lootbox(cursor, primary_id: int):
     sql = "SELECT * from lootboxes where id = %s"
 
     result = execute_query(cursor, sql, (primary_id,))
-    return result if len(result) > 0 else "No goal with that primary id"
+    return result if len(result) > 0 else False
 
 
 def create_lootboxes(cursor: mariadb.Cursor, game_id, game_airports: list):

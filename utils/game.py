@@ -4,7 +4,8 @@ from utils.airports import create_game_airports, get_distance, valid_airport, ac
 
 from random import choice
 
-from utils.CONSTANTS import DEFAULT_FUEL_AMOUNT, DEFAULT_MONEY_AMOUNT
+from utils.CONSTANTS import DEFAULT_FUEL_AMOUNT, DEFAULT_MONEY_AMOUNT, FUEL_TO_MONEY_RATIO
+
 
 
 def get_game_details(cursor, game_id: int):
@@ -87,9 +88,10 @@ def fly(cursor, game_id: int, icao_code: str):
 
         save_game(cursor, game_id, ('fuel', 'location', 'flights_taken', 'fuel_used'),
                   (fuel, location, flights_taken, fuel_used))
-        return "Flight successful!"
+        return True
     else:
-        return f"Not enough fuel for flight. Fuel needed: {distance_between_ports}, fuel owned: {fuel}"
+        return False
+
 
 
 def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
@@ -105,7 +107,8 @@ def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
 
     execute_query(cursor, test, fetch=False)
 
-    return "Game save successful"
+    return True
+
 
 
 def check_game_state(cursor, game_id: int):
@@ -123,3 +126,34 @@ def check_game_state(cursor, game_id: int):
     if len(available_airports) == 0:
         # we've lost.
         pass
+
+
+def buy_fuel(cursor, game_id: int, amount: int):
+    """
+
+    Args:
+        amount:
+        Amount of fuel to be bough in liters. So if you want to buy 500 liters of fuel, it would cost 1000 euros
+        cursor:
+        game_id:
+
+    Returns:
+
+    """
+
+    game_details = get_game_details(cursor, game_id)[0]
+
+    fuel = game_details['fuel']
+    money = game_details['money']
+    # print(money,fuel, amount, amount*2)
+    if amount * 2 > money:
+        return False
+
+    new_fuel_count = fuel + amount
+    new_money_count = money - amount * FUEL_TO_MONEY_RATIO
+
+    result = save_game(cursor, game_id, ("fuel", "money"), (new_fuel_count, new_money_count))
+    if result:
+        return True
+    else:
+        return False
