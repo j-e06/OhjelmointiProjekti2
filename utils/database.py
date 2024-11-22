@@ -36,6 +36,7 @@ def run_sql_file(cursor, file_path: str) -> None:
             if command:
                 cursor.execute(command)
 
+
 def execute_query(cursor: mariadb.Cursor, query, params=None, fetch=True):
     """
     Executes a SQL query with optional parameters and fetches results if required.
