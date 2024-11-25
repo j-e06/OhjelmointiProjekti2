@@ -7,6 +7,7 @@ from random import choice
 from utils.CONSTANTS import DEFAULT_FUEL_AMOUNT, DEFAULT_MONEY_AMOUNT, FUEL_TO_MONEY_RATIO
 
 
+
 def get_game_details(cursor, game_id: int):
     """
     Returns all information for given game
@@ -21,7 +22,7 @@ def get_game_details(cursor, game_id: int):
     if len(result) == 0:
         return None
     else:
-        return {"result": result}, 200
+        return result
 
 
 def create_game(cursor, name, password) -> int:
@@ -51,7 +52,7 @@ def create_game(cursor, name, password) -> int:
 
     create_lootboxes(cursor, game_id, game_airports)
 
-    return {"game_id": game_id}, 200
+    return game_id
 
 
 def fly(cursor, game_id: int, icao_code: str):
@@ -92,51 +93,23 @@ def fly(cursor, game_id: int, icao_code: str):
         return False
 
 
-def login(cursor, name, password):
-    if name == "noreg" and password == "noreg":
-        # playing as guest, create random login and password for game.
-        name = "BLANK"
-        password = "BLANK"
-        return {"game_id":create_game(cursor, name, password)}, 200
-
-    sql = "SELECT game_id from game where name = '%s' AND password = '&s'"
-
-    result = execute_query(cursor, sql, (name, password))
-
-    if len(result) == 0:
-        return False
-    else:
-        return {"game_id": result[0]['game_id']}, 200
-
-
-def register(cursor, name, password):
-    sql = "SELECT game_id from game where name = '%s' AND password ='%s'"
-
-    result = execute_query(cursor, sql, (name, password))
-
-    if len(result) >= 1:
-        # an account with that name and password already exists, please redirect them to either continue game
-        # or delete previous game
-        return [res['game_id'] for res in result]
-    else:
-        game_id = create_game(cursor, name, password)
-        return {"game_id": game_id}, 200
-
-
 def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
-    set_clauses = [f"{column} = {value}" if isinstance(value, (int, float)) else f"{column} = '{value}'"
-                   for column, value in zip(to_update, information)]
+    # Ensure lengths of `to_update` and `information` match
+    if len(to_update) != len(information):
+        return False, "The lengths of 'to_update' and 'information' must match."
 
-    # above checks if value is a number, if yes we can just put into database in form of game_id = id
-    # but if it's a string, it adds '' around it. So it becomes game_name = 'game_name'
-
+    # Construct SQL SET clauses
+    set_clauses = [f"{column} = %s" for column in to_update]
     set_clauses_str = ', '.join(set_clauses)
 
-    test = f"UPDATE game SET {set_clauses_str} WHERE game_id = {game_id};"
+    # Construct the query
+    query = f"UPDATE game SET {set_clauses_str} WHERE game_id = %s;"
+    params = (*information, game_id)
 
-    execute_query(cursor, test, fetch=False)
 
-    return True
+    execute_query(cursor, query, params=params, fetch=False)
+
+    return True, "Success"
 
 
 def check_game_state(cursor, game_id: int):
@@ -175,7 +148,7 @@ def buy_fuel(cursor, game_id: int, amount: int):
     money = game_details['money']
     # print(money,fuel, amount, amount*2)
     if amount * 2 > money:
-        return {"error": "Not enough money"}, 400
+        return False
 
     new_fuel_count = fuel + amount
     new_money_count = money - amount * FUEL_TO_MONEY_RATIO
@@ -184,4 +157,4 @@ def buy_fuel(cursor, game_id: int, amount: int):
     if result:
         return True
     else:
-        return {"error": f"Unable to save game, error: {result}"}, 400
+        return False
