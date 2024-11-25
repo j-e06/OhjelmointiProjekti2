@@ -147,13 +147,13 @@ def buy_fuel(cursor, game_id: int, amount: int):
     money = game_details['money']
     # print(money,fuel, amount, amount*2)
     if amount * 2 > money:
-        return False
+        return False, "U don't have enough money."
 
     new_fuel_count = fuel + amount
     new_money_count = money - amount * FUEL_TO_MONEY_RATIO
 
     result = save_game(cursor, game_id, ("fuel", "money"), (new_fuel_count, new_money_count))
     if result:
-        return True
+        return True, {"fuel": new_fuel_count, "money": new_money_count}
     else:
-        return False
+        return False, "U don't have enough money."

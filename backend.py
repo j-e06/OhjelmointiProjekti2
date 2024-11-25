@@ -70,5 +70,32 @@ def create_new_name():
 
     return jsonify(game_details), 200
 
+@app.route('/api/login', methods=['GET'])
+def login():
+    cursor = g.cursor
 
+    args = request.args
+    name = args.get("name")
+    password = args.get("password")
+    if name and password:
+        if len(name) > 4 and len(password) > 4:
+            return
+            #result = login(cursor, name.strip(), password.strip())
+            #if result[0] is True:
+                #return jsonify({"status": result[1]}), 200
+    return jsonify({"error": "password or name is invalid"}), 400
+
+@app.route('/api/refuel', methods=['GET'])
+def refuel():
+    cursor = g.cursor
+    args = request.args
+    game_id = int(args.get("game_id"))
+    amount = int(args.get("amount"))
+    if not game_id or not amount:
+        return jsonify({"error": "Missing 'game_id' or 'amount'"}), 400
+    result = buy_fuel(cursor, game_id, amount)
+    if result[0]:
+        return jsonify({"status": result[1]}), 200
+    else:
+        return jsonify({"error": result[1]}), 400
 app.run(debug=True)
