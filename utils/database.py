@@ -32,7 +32,6 @@ def run_sql_file(cursor, file_path: str) -> None:
 
         for command in sql_commands.split(";"):
             command = command.strip()
-
             if command:
                 cursor.execute(command)
 

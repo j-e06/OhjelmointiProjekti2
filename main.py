@@ -1,53 +1,112 @@
-import json
-from flask import Flask, request
+from flask import Flask, request, jsonify, g
 
-from utils.database import Database, execute_query, run_sql_file
-# from utils.airports import accessible_airports, get_distance, valid_airport, get_airport_info, \
-#    get_all_airports, create_game_airports
-import mariadb
+from utils.database import Database, run_sql_file
 
-from utils.game import get_game_details, create_game, fly, save_game, check_game_state, buy_fuel
+from utils.game import *
+from utils.lootboxes import *
+from utils.airports import *
 
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 config = {
-    "host": "127.0.0.1",
-    "port": 3307,
-    "database": "project",
-    "user": "root",
-    "password": "root",
+    "host": os.getenv('host'),
+    "port": int(os.getenv('port')),
+    "database": os.getenv('database'),
+    "user": os.getenv('user'),
+    "password": os.getenv('password'),
     "autocommit": True
 }
 
-SQL_FILE_PATH = "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/database_creation.sql"
-RESET_FILE_PATH = "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/reset_db.sql"
+SQL_FILE_PATH = os.getenv('sql_file_path')
+RESET_FILE_PATH = os.getenv('reset_file_path')
+
+app = Flask(__name__)
 
 
-def main(connection_config, file_path, reset_path):
-    with Database(**connection_config) as cursor:
-        # return cursor
-        # RESET TABLES IN DB.
-        # run_sql_file(cursor, reset_path)
+@app.before_request
+def setup_db():
+    db = Database(**config)
+    g.db = db
 
-        run_sql_file(cursor, file_path)
+    g.cursor = db.__enter__()
+    # run_sql_file(g.cursor, RESET_FILE_PATH)
+    run_sql_file(g.cursor, SQL_FILE_PATH)
 
-        print(f"Database setup complete.")
 
-        print("Testing creation of game...")
-        name = "Jani"
-        password = "Test"
+@app.route('/api/get_airport_information', methods=['get'])
+def get_airport_information():
+    cursor = g.cursor
 
-        game_id = create_game(cursor, name, password)
+    args = request.args
+    icao = args.get("icao_code")
+    game_id = int(args.get("game_id"))
+    if not valid_airport(cursor, icao):
+        return jsonify({"error": "Invalid ICAO-code"}), 400
 
-        #game_id = 1
+    information = get_airport_info(cursor, icao, game_id)
+    if len(information) > 0:
+        return jsonify(information), 200
+    else:
+        return jsonify({"error": f"Unables to get information for said airport for game {game_id}"}), 400
 
-        # test = fly(cursor, game_id, "EFHK")
+@app.route('/api/create_new_game', methods=['GET'])
+def create_new_name():
+    cursor = g.cursor
 
-        result = buy_fuel(cursor, game_id, 500)
-        if result:
-            print("Fuel purchase successful.")
-        else:
-            print(result)
+    args = request.args
+    name = args.get("name")
+    password = args.get("password")
+    if not name or not password:
+        return jsonify({"error": "Missing 'name' or 'password'"}), 400
+
+    game_id = create_game(cursor, name.strip(), password.strip())
+
+    game_details = get_game_details(cursor, game_id)
+
+    return jsonify(game_details), 200
+
+@app.route('/api/save_game_details', methods=['GET'])
+def save_game_details():
+    cursor = g.cursor
+
+    args = request.args
+
+    game_id = int(args.get('game_id'))
+
+    to_update = tuple(args.get('to_update').split(','))
+
+    information = tuple(int(value) if value.isdigit() else value for value in args.get('information').split(","))
+    result = save_game(cursor, game_id, to_update, information)
+    print(result)
+
+    if result[0] is False:
+        return {"error": result[1]}, 400
+    else:
+        return {"status": result[1]}, 200
+
+@app.route('/api/open_lootbox', methods=['GET'])
+def open_lootbox():
+    cursor = g.cursor
+
+    args = request.args
+
+    game_id = int(args.get('game_id'))
+
+    icao_code = args.get('icao_code')
+
+    open_type = args.get('open_type')
+
+    if not valid_airport(cursor, icao_code):
+        return {"error": "Invalid ICAO-code"}, 400
+
+    open_port_lootbox(cursor, icao_code, game_id, open_type)
+    #if result[0] is False:
+    #    return {"error": result[1]}, 400
 
 
 if __name__ == "__main__":
-    main(config, SQL_FILE_PATH, RESET_FILE_PATH)
+    app.run(debug=True)

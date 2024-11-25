@@ -93,22 +93,23 @@ def fly(cursor, game_id: int, icao_code: str):
         return False
 
 
-
 def save_game(cursor, game_id: int, to_update: tuple, information: tuple):
-    set_clauses = [f"{column} = {value}" if isinstance(value, (int, float)) else f"{column} = '{value}'"
-                   for column, value in zip(to_update, information)]
+    # Ensure lengths of `to_update` and `information` match
+    if len(to_update) != len(information):
+        return False, "The lengths of 'to_update' and 'information' must match."
 
-    # above checks if value is a number, if yes we can just put into database in form of game_id = id
-    # but if it's a string, it adds '' around it. So it becomes game_name = 'game_name'
-
+    # Construct SQL SET clauses
+    set_clauses = [f"{column} = %s" for column in to_update]
     set_clauses_str = ', '.join(set_clauses)
 
-    test = f"UPDATE game SET {set_clauses_str} WHERE game_id = {game_id};"
+    # Construct the query
+    query = f"UPDATE game SET {set_clauses_str} WHERE game_id = %s;"
+    params = (*information, game_id)
 
-    execute_query(cursor, test, fetch=False)
 
-    return True
+    execute_query(cursor, query, params=params, fetch=False)
 
+    return True, "Success"
 
 
 def check_game_state(cursor, game_id: int):

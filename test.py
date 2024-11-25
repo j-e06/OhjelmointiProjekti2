@@ -12,5 +12,9 @@ config = {
 
 
 with Database(**config) as cursor:
-    result = accessible_airports(cursor, "EFHK", 2500)
-    print(result)
+    #run_sql_file(cursor, "C:/Users/janie/PycharmProjects/OhjelmointiProjekti2/utils/database_creation.sql")
+
+
+    game_id = 1
+
+    print(get_airport_info(cursor, "EFHK", game_id))
