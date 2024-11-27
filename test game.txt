@@ -1,0 +1,18 @@
+Create a test game:
+
+Create the game with username, password Jani, Test - done, created an entry in game table, game_airports table.
+
+open lootbox of current airport with money
+
+fly to random airport
+
+open lootbox with fuel
+
+assume we found diamond on previous lootbox
+
+fly to home and win!
+
+
+
+[{'id': 2307, 'game_id': 1, 'airport_id': 'EFHK', 'lootbox_status': 0, 'lootbox_id': 1, 'ident': 
+'EFHK', 'type': 'large_airport', 'name': 'Helsinki Vantaa Airport', 'latitude_deg': 60.3172, 'longitude_deg': 24.963301, 'elevation_ft': 179, 'continent': 'EU', 'iso_country': 'FI', 'iso_region': 'FI-18', 'municipality': 'Helsinki', 'scheduled_service': 'yes', 'gps_code': 'EFHK', 'iata_code': 'HEL', 'local_code': '', 'home_link': 'http://www.finavia.fi/en/helsinki-airpor', 'wikipedia_link': 'https://en.wikipedia.org/wiki/Helsinki_A', 'keywords': ''}]
