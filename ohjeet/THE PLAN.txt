@@ -1,0 +1,104 @@
+
+default airport, country
+
+new ones needed:
+goals, game, game_airports
+
+
+game:
+game_id: primary_key: int
+name: player_name varchar
+password (for saving game): varchar
+starting_airport: varchar
+location: varchar
+money: int
+fuel: float
+diamond (diamond found true/false): bool
+
+game_airports:
+id: primary_key: int
+airport_id: foreign key to airport ident
+lootbox_status: opened/closed = true/false
+lootbox_id: foreign key references goals table
+
+goals table:
+values:
+1
+2
+3
+4
+5
+6
+
+with a value property for amount of money:
+100-800 euros per gem - temp
+0 - milk
+-1 - rosvo
+1 - diamond
+
+and then name property for all
+ruby
+smaragdi
+emerald
+milk 
+robber
+diamond
+
+
+
+
+
+
+
+
+
+player info:
+name
+starting_airport
+money (1 euro = 2 km)
+fuel
+diamond
+
+button to buy more range
+
+what is shown when pressed on an airport:
+name
+distance from current one
+lootbox opened yes or no
+
+
+GAME BACKGROUND:
+static img of europe
+each airport has a dot to be clicked on, opens a view of somesorts
+
+shows distance from current airport, cost, lootbox status
+
+
+each dot has a color depending on it's state:
+grey: too far away
+green: available and lootbox available
+red: avalable but lootbox already opened
+
+blue: starting airport - no lootbox
+
+
+
+at the end of the game show:
+
+amount of fuel used
+something related to kestävä kehitys based on fuel used
+amount of flights taken
+amount of lootboxes opened
+
+
+
+dTODO:
+Informaation funktiot pythonissa
+Flaskin endpointtien tekeminen (haetaan tietoa tietokannasta.)
+
+
+
+
+
+
+
