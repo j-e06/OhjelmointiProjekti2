@@ -70,7 +70,7 @@ def open_port_lootbox(cursor, game_id, open_type):
     # Save changes to the game table
     to_update = tuple(updates.keys())
     information = tuple(updates.values())
-    result = save_game(cursor, game_id, to_update, information, fuel=LOOTBOX_COST_FUEL if "fuel" in updates.keys() else None)
+    result = save_game(cursor, game_id, to_update, information, fuel=LOOTBOX_COST_FUEL if "fuel" in updates.keys() else None, lootbox=True)
 
     # Update game_airports table to mark the lootbox as opened
     sql = "UPDATE game_airports SET lootbox_status = %s WHERE game_id = %s AND airport_id = %s"

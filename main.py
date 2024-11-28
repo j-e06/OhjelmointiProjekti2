@@ -83,7 +83,7 @@ def save_game_details():
 
     information = tuple(int(value) if value.isdigit() else value for value in args.get('information').split(","))
     result = save_game(cursor, game_id, to_update, information)
-    print(result)
+    # print(result)
 
     if result[0] is False:
         return jsonify({"error": result[1]}), 400
@@ -104,10 +104,11 @@ def open_lootbox():
     result = open_port_lootbox(cursor, game_id, open_type)
 
     if result[0] is False:
-       return jsonify({"error": result[1]}), 400
+        return jsonify({"error": result[1]}), 400
     else:
         # Success!
         return jsonify({"status": result[1]}), 200
+
 
 @app.route('/api/login', methods=['GET'])
 def login():
@@ -125,6 +126,7 @@ def login():
                 return jsonify({"error": result[1]}), 200
     return jsonify({"error": "password or name is invalid"}), 400
 
+
 @app.route('/api/register', methods=['GET'])
 def register():
     cursor = g.cursor
@@ -139,6 +141,7 @@ def register():
             result = create_game(cursor, name, password)
             return jsonify(result), 200
     return jsonify({"error": "password or name is invalid"}), 400
+
 
 @app.route('/api/refuel', methods=['GET'])
 def refuel():

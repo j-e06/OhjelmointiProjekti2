@@ -1,0 +1,15 @@
+Endpointit mitkä pitää luoda:
+
+game_details
+
+accessible_airports
+
+get_distance
+
+valid_airport
+
+get_lootboxes
+
+get_lootbox
+
+check_game_state
