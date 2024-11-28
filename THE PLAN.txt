@@ -13,22 +13,24 @@ starting_airport: varchar
 location: varchar
 money: int
 fuel: float
+fuel_used: float
+lootboxes_opened: int
+flights_taken: int
 diamond (diamond found true/false): bool
 
 game_airports:
-id: primary_key: int
-airport_id: foreign key to airport ident
-lootbox_status: opened/closed = true/false
-lootbox_id: foreign key references goals table
+id int primary key
+game_id int references game_id
+airport_id: varchar foreign key to airport ident
+lootbox_status: bool
+lootbox_id: int foreign key references goals table
 
 goals table:
-values:
-1
-2
-3
-4
-5
-6
+id int primary key (possible values 1-6)
+reward int (possible values 200-800 in increments of 200 with -1 being robber, 1 diamond and 0 being empty)
+rarity varchar (figure it out)
+
+
 
 with a value property for amount of money:
 100-800 euros per gem - temp
@@ -89,16 +91,3 @@ amount of fuel used
 something related to kestävä kehitys based on fuel used
 amount of flights taken
 amount of lootboxes opened
-
-
-
-dTODO:
-Informaation funktiot pythonissa
-Flaskin endpointtien tekeminen (haetaan tietoa tietokannasta.)
-
-
-
-
-
-
-
