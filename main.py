@@ -157,6 +157,64 @@ def refuel():
     else:
         return jsonify({"error": result[1]}), 400
 
+@app.route('/api/game_details', methods=['GET'])
+def game_details():
+    cursor = g.cursor
+    args = request.args
+    game_id = int(args.get("game_id"))
+    if not game_id:
+        return jsonify({"error": "Missing game_id"}), 400
+    result = get_game_details(cursor, game_id)
+    if result is None:
+        return jsonify({"error": "Game not found"}), 400
+    else:
+        return jsonify({"status": result}), 200
+
+@app.route('/api/check_accessible_airports', methods=['GET'])
+def check_accessible_airports():
+    cursor = g.cursor
+    args = request.args
+    game_id = int(args.get("game_id"))
+    if not game_id:
+        return jsonify({"error": "Missing game_id"}), 400
+    airports = accessible_airports(cursor, game_id)
+    if airports[0] is False:
+        return jsonify({"error": airports[1]}), 400
+    else:
+        return jsonify({"status": airports[1]}), 200
+
+@app.route('/api/check_distance', methods=['GET'])
+def check_distance():
+    cursor = g.cursor
+    args = request.args
+    icao1 = args.get("icao1")
+    icao2 = args.get("icao2")
+    result = check_distance(cursor, icao1, icao2)
+    if result is False:
+        return jsonify({"error": result[1]}), 400
+    else:
+        return jsonify({"status": result[1]}), 200
+
+@app.route('/api/check_valid_airport', methods=['GET'])
+def check_valid_airport():
+    cursor = g.cursor
+    args = request.args
+    icao = args.get("icao")
+    result = valid_airport(cursor, icao)
+    if result is False:
+        return jsonify({"error": result}), 400
+    else:
+        return jsonify({"status": result}), 200
+
+@app.route('/api/lootbox', methods=['GET'])
+def lootbox():
+    cursor = g.cursor
+    args = request.args
+    lootbox_id = int(args.get("lootbox_id"))
+    result = lootbox(cursor, lootbox_id)
+    return jsonify({"status": result}), 200
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

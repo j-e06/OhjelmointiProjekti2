@@ -82,17 +82,7 @@ def open_port_lootbox(cursor, game_id, open_type):
         return False, result[1]
 
 
-def get_lootboxes(cursor):
-    """
-    :param cursor:
-    :return
-    List: Returns a list with dictionary key, value pairs for all goals:
-    """
-    sql = "SELECT * from lootboxes"
-    return execute_query(cursor, sql)
-
-
-def get_lootbox(cursor, primary_id: int):
+def get_lootbox(cursor, lootbox_id: int):
     """
 
     :param cursor:
@@ -101,7 +91,7 @@ def get_lootbox(cursor, primary_id: int):
     """
     sql = "SELECT * from lootboxes where id = %s"
 
-    result = execute_query(cursor, sql, (primary_id,))
+    result = execute_query(cursor, sql, (lootbox_id,))
     return result
 
 
