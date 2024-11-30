@@ -51,7 +51,7 @@ def get_airport_information():
     if len(information) > 0:
         return jsonify(information), 200
     else:
-        return jsonify({"error": f"Unable to get information for said airport for game {game_id}"}), 400
+        return jsonify({"status": f"Unable to get information for said airport for {game_id}"}), 400
 
 
 @app.route('/api/create_new_game', methods=['GET'])
@@ -123,8 +123,8 @@ def login():
             if result[0] is True:
                 return jsonify({"status": (result[1], result[2])}), 200
             else:
-                return jsonify({"error": result[1]}), 200
-    return jsonify({"error": "password or name is invalid"}), 400
+                return jsonify({"status": result[1]}), 400
+    return jsonify({"status": "password or name is invalid"}), 400
 
 
 @app.route('/api/register', methods=['GET'])
