@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, g
 
 from utils.database import Database, run_sql_file
 
-from utils.game import create_game, get_game_details, fly, buy_fuel
+from utils.game import create_game, get_game_details, fly, buy_fuel, accessible_airports
 from utils.lootboxes import open_port_lootbox
 from utils.airports import get_airport_info, get_all_airports
 
@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from utils.CONSTANTS import *
+
 
 def game_test():
     config = {
@@ -57,6 +58,7 @@ def game_test():
     if lootbox_result[0]:
         print(lootbox_result[1])
 
+    print(accessible_airports(cursor, game_id))
 
     print("Flying to nonexistent airport... ICAO-code: testi123")
 

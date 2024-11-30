@@ -55,6 +55,8 @@ def create_game(cursor, name, password) -> int:
 
 
 def fly(cursor, game_id: int, icao_code: str):
+
+    from utils.airports import get_airport_info
     if not valid_airport(cursor, icao_code):
         return "Invalid ICAO-code."
 
@@ -65,6 +67,7 @@ def fly(cursor, game_id: int, icao_code: str):
 
     if location == icao_code:
         return "Cannot fly to the same airport you are currently in."
+
 
     # Convert variables to appropriate types
     fuel = float(fuel)
@@ -174,7 +177,7 @@ def login_to_game(cursor, name, password):
         game_id = result[0]['game_id']
         game_details = get_game_details(cursor, game_id)
 
-        return True, game_details
+        return True, game_details, game_id
 
     else:
         return False, "No game found with given name and password"

@@ -45,7 +45,7 @@ def get_airport_information():
     icao = args.get("icao_code")
     game_id = int(args.get("game_id"))
     if not valid_airport(cursor, icao):
-        return jsonify({"error": "Invalid ICAO-code"}), 400
+        return jsonify({"status": "Invalid ICAO-code"}), 400
 
     information = get_airport_info(cursor, icao, game_id)
     if len(information) > 0:
@@ -62,7 +62,7 @@ def create_new_game():
     name = args.get("name")
     password = args.get("password")
     if not name or not password:
-        return jsonify({"error": "Missing 'name' or 'password'"}), 400
+        return jsonify({"status": "Missing 'name' or 'password'"}), 400
 
     game_id = create_game(cursor, name.strip(), password.strip())
 
@@ -86,7 +86,7 @@ def save_game_details():
     # print(result)
 
     if result[0] is False:
-        return jsonify({"error": result[1]}), 400
+        return jsonify({"status": result[1]}), 400
     else:
         return jsonify({"status": result[1]}), 200
 
@@ -104,7 +104,7 @@ def open_lootbox():
     result = open_port_lootbox(cursor, game_id, open_type)
 
     if result[0] is False:
-        return jsonify({"error": result[1]}), 400
+        return jsonify({"status": result[1]}), 400
     else:
         # Success!
         return jsonify({"status": result[1]}), 200
@@ -118,10 +118,10 @@ def login():
     name = args.get("name")
     password = args.get("password")
     if name and password:
-        if len(name) > 4 and len(password) > 4:
+        if len(name) >= 4 and len(password) >= 4:
             result = login_to_game(cursor, name.strip(), password.strip())
             if result[0] is True:
-                return jsonify({"status": result[1]}), 200
+                return jsonify({"status": (result[1], result[2])}), 200
             else:
                 return jsonify({"error": result[1]}), 200
     return jsonify({"error": "password or name is invalid"}), 400
@@ -137,10 +137,10 @@ def register():
     password = args.get("password")
 
     if name and password:
-        if len(name) > 4 and len(password) > 4:
+        if len(name) >= 4 and len(password) >= 4:
             result = create_game(cursor, name, password)
             return jsonify(result), 200
-    return jsonify({"error": "password or name is invalid"}), 400
+    return jsonify({"status": "password or name is invalid"}), 400
 
 
 @app.route('/api/refuel', methods=['GET'])
@@ -150,12 +150,13 @@ def refuel():
     game_id = int(args.get("game_id"))
     amount = int(args.get("amount"))
     if not game_id or not amount:
-        return jsonify({"error": "Missing 'game_id' or 'amount'"}), 400
+        return jsonify({"status": "Missing 'game_id' or 'amount'"}), 400
     result = buy_fuel(cursor, game_id, amount)
     if result[0]:
         return jsonify({"status": result[1]}), 200
     else:
-        return jsonify({"error": result[1]}), 400
+        return jsonify({"status": result[1]}), 400
+
 
 @app.route('/api/game_details', methods=['GET'])
 def game_details():
@@ -163,12 +164,13 @@ def game_details():
     args = request.args
     game_id = int(args.get("game_id"))
     if not game_id:
-        return jsonify({"error": "Missing game_id"}), 400
+        return jsonify({"status": "Missing game_id"}), 400
     result = get_game_details(cursor, game_id)
     if result is None:
-        return jsonify({"error": "Game not found"}), 400
+        return jsonify({"status": "Game not found"}), 400
     else:
         return jsonify({"status": result}), 200
+
 
 @app.route('/api/check_accessible_airports', methods=['GET'])
 def check_accessible_airports():
@@ -176,12 +178,13 @@ def check_accessible_airports():
     args = request.args
     game_id = int(args.get("game_id"))
     if not game_id:
-        return jsonify({"error": "Missing game_id"}), 400
+        return jsonify({"status": "Missing game_id"}), 400
     airports = accessible_airports(cursor, game_id)
     if airports[0] is False:
-        return jsonify({"error": airports[1]}), 400
+        return jsonify({"status": airports[1]}), 400
     else:
         return jsonify({"status": airports[1]}), 200
+
 
 @app.route('/api/check_distance', methods=['GET'])
 def check_distance():
@@ -191,9 +194,10 @@ def check_distance():
     icao2 = args.get("icao2")
     result = check_distance(cursor, icao1, icao2)
     if result is False:
-        return jsonify({"error": result[1]}), 400
+        return jsonify({"status": result[1]}), 400
     else:
         return jsonify({"status": result[1]}), 200
+
 
 @app.route('/api/check_valid_airport', methods=['GET'])
 def check_valid_airport():
@@ -202,9 +206,10 @@ def check_valid_airport():
     icao = args.get("icao")
     result = valid_airport(cursor, icao)
     if result is False:
-        return jsonify({"error": result}), 400
+        return jsonify({"status": result}), 400
     else:
         return jsonify({"status": result}), 200
+
 
 @app.route('/api/lootbox', methods=['GET'])
 def lootbox():
@@ -213,7 +218,6 @@ def lootbox():
     lootbox_id = int(args.get("lootbox_id"))
     result = lootbox(cursor, lootbox_id)
     return jsonify({"status": result}), 200
-
 
 
 if __name__ == "__main__":
