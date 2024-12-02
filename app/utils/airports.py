@@ -99,7 +99,7 @@ def accessible_airports(cursor, game_id: int):
     Args:
         game_id:
     """
-    from utils.game import get_game_details
+    from .game import get_game_details
     game_details = get_game_details(cursor, game_id)[0]
     if game_details is None:
         return False, "Game cannot be found."
@@ -110,7 +110,7 @@ def accessible_airports(cursor, game_id: int):
     available = []
     airports = get_all_airports(cursor, game_id)
     for port in airports:
-        distance_from_port = get_distance(cursor, icao, port['ident'])
+        distance_from_port = get_distance(cursor, icao, port['ident'])[1]
         if fuel >= distance_from_port > 1:
             available.append(port)
     return True, available

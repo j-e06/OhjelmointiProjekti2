@@ -74,7 +74,7 @@ def fly(cursor, game_id: int, icao_code: str):
     flights_taken = int(flights_taken)
     fuel_used = float(fuel_used)
 
-    distance_between_ports = get_distance(cursor, location, icao_code)
+    distance_between_ports = get_distance(cursor, location, icao_code)[1]
     # print(distance_between_ports)
     if fuel >= distance_between_ports > 1:
 

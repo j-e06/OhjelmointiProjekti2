@@ -1,0 +1,152 @@
+/* Yleiset tyylit */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigointipalkki */
+header {
+    background-color: black;
+    color: navajowhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    margin: 0 5px;
+}
+
+header nav ul li a {
+    color: darkkhaki;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+/* Pääasettelu: Kartta vasemmalle, laatikot oikealle */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Kartta */
+#map {
+    width: 60%; /* Kartta vie 60% leveydestä */
+    height: 80vh; /* Kartan korkeus 80% näkymästä */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Laatikoiden alue */
+.right-container {
+    width: 35%; /* Laatikoiden alue vie 35% leveydestä */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start; /* Tuo kaikki laatikot vasemmalle, mutta pysyy oikealla */
+}
+
+/* Laatikoiden tyylit */
+.box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Laatikoiden leveys mukautuu oikean alueen leveyteen */
+}
+
+/* Otsikko */
+.page-title {
+    font-size: 2em;
+    margin: 20px 0;
+    color: #444;
+}
+
+/* Taulukko */
+table {
+    width: 100%; /* Taulukko täyttää laatikon leveyden */
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Lisää kevyet viivat riveille */
+}
+
+/* Lootbox-lomake */
+.form-group {
+    margin: 15px 0;
+    width: 100%; /* Lomake mukautuu laatikon leveyteen */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"],
+select {
+    width: 100%; /* Täyttää laatikon leveyden */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #0077cc;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* Footer */
+.page-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+/* Responsiivinen suunnittelu */
+@media screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #map {
+        width: 90%; /* Kartta täyttää suurimman osan näkymästä mobiilissa */
+        height: 50vh;
+    }
+
+    .right-container {
+        width: 90%; /* Laatikoiden leveys mukautuu mobiilinäkymään */
+    }
+}

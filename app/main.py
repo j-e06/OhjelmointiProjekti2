@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, g
-
+from flask_cors import CORS
 from utils.database import Database, run_sql_file
 
 from utils.game import *
@@ -25,7 +25,7 @@ SQL_FILE_PATH = os.getenv('sql_file_path')
 RESET_FILE_PATH = os.getenv('reset_file_path')
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.before_request
 def setup_db():
@@ -34,7 +34,7 @@ def setup_db():
 
     g.cursor = db.__enter__()
     # run_sql_file(g.cursor, RESET_FILE_PATH)
-    run_sql_file(g.cursor, SQL_FILE_PATH)
+    #run_sql_file(g.cursor, SQL_FILE_PATH)
 
 
 @app.route('/api/get_airport_information', methods=['get'])
@@ -179,6 +179,7 @@ def check_accessible_airports():
     game_id = int(args.get("game_id"))
     if not game_id:
         return jsonify({"status": "Missing game_id"}), 400
+
     airports = accessible_airports(cursor, game_id)
     if airports[0] is False:
         return jsonify({"status": airports[1]}), 400

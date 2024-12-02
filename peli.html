@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euroopan Lentopeli</title>
+    <link rel="stylesheet" href="peli1.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.esm.js" defer></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.js" defer></script>
+    <script src="peli1.js" defer></script>
+</head>
+<body>
+    <!-- Navigointipalkki -->
+     <header>
+
+        <nav>
+            <ul>
+                <li><a href="kirjoudu.html">Login</a></li>
+                <li><a href="peli.html">Peli</a></li>
+                <li><a href="about.html">About</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Otsikko -->
+    <header>
+        <h1 class="page-title">Afrikan tähti</h1>
+    </header>
+
+    <main class="main-container">
+    <div id="map"></div>
+    <div class="right-container">
+        <section class="box">
+            <h2>Game Status</h2>
+            <table>
+                <tr>
+                    <td>CO2 Consumed:</td>
+                    <td><span id="consumed">0</span>kg</td>
+                </tr>
+                <tr>
+                    <td>CO2 Budget:</td>
+                    <td><span id="budget">1000</span>kg</td>
+                </tr>
+            </table>
+        </section>
+        <section class="box">
+            <h2>Airport Details</h2>
+            <table>
+                <tr>
+                    <td>Temperature:</td>
+                    <td id="airport-temp">10°C</td>
+                </tr>
+                <tr>
+                    <td>Conditions:</td>
+                    <td id="airport-conditions">Cloudy</td>
+                </tr>
+            </table>
+        </section>
+        <section class="box">
+            <h2>Lootbox</h2>
+            <div class="form-group">
+                <label for="lootbox-game-id">Game ID:</label>
+                <input type="number" id="lootbox-game-id" placeholder="Enter Game ID">
+            </div>
+            <div class="form-group">
+                <label for="lootbox-type">Lootbox Type:</label>
+                <select id="lootbox-type">
+                    <option value="money">Money</option>
+                    <option value="fuel">Fuel</option>
+                </select>
+            </div>
+            <button onclick="openLootbox()">Open Lootbox</button>
+        </section>
+    </div>
+</main>
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p>© Euroopan Lentopeli</p>
+    </footer>
+</body>
+</html>

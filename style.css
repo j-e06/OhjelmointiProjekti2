@@ -1,0 +1,309 @@
+
+/* Yleiset tyylit */
+body {
+    font-family: Arial, sans-serif;
+    background-color: navajowhite;
+    color: blueviolet;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+}
+/* Navigointipalkki */
+header {
+    background-color: black;
+    color: navajowhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    margin: 0 5px;
+}
+
+header nav ul li a {
+    color: darkkhaki;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+
+/* Laatikoiden alue */
+.right-container {
+    width: 35%; /* Laatikoiden alue vie 35% leveydestä */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start; /* Tuo kaikki laatikot vasemmalle, mutta pysyy oikealla */
+}
+
+/* Laatikoiden tyylit */
+.box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Laatikoiden leveys mukautuu oikean alueen leveyteen */
+}
+
+/* Otsikko */
+.page-title {
+    font-size: 2em;
+    margin: 20px 0;
+    color: #444;
+}
+
+/* Taulukko */
+table {
+    width: 100%; /* Taulukko täyttää laatikon leveyden */
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Lisää kevyet viivat riveille */
+}
+
+/* Lootbox-lomake */
+.form-group {
+    margin: 15px 0;
+    width: 100%; /* Lomake mukautuu laatikon leveyteen */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"],
+select {
+    width: 100%; /* Täyttää laatikon leveyden */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #0077cc;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* Footer */
+.page-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+
+/* Nappien tyylit */
+.login-button, .guest-button {
+  display: inline-block;
+  width: 13%;
+  padding: 5px;
+  margin-top: 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+/* Tuoteosio */
+.kirjaudu {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.kirjaudu_div {
+    background-color: #eaeaea;
+    width: 30%;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.kirjaudu_div h2 {
+    font-size: 1.3em;
+    padding-bottom: 10px;
+}
+
+.kirjaudu_div .kirjoudu-image {
+    width: 100%;
+    height: 150px;
+
+    color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+
+.kirjaudu_div p {
+    padding: 10px;
+    font-size: 0.9em;
+    color: #555;
+    text-align: left;
+}
+
+
+.abouts {
+    background-color: #eaeaea;
+    width: 50%;
+    text-align: center;
+    padding: 65px;
+    border-radius: 15px;
+}
+
+.about h2 {
+    font-size: 1.3em;
+    padding-bottom: 990px;
+}
+
+.about .about-image {
+    width: 70%;
+    height: 450px;
+
+    color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7em;
+    margin-bottom: 30px;
+}
+
+
+
+
+.login-button {
+  background: #4caf50;
+  color: white;
+}
+
+.guest-button {
+  background: #f44336;
+  color: white;
+}
+
+.login-button:hover {
+  background: #45a049;
+}
+
+.guest-button:hover {
+  background: #e53935;
+}
+/* Päänäkymän otsikko */
+.page-header {
+
+  padding: 10px 20px;
+  text-align: center;
+}
+
+/*Rekisteröitymiseen */
+section {
+    margin-bottom: 3px;
+    padding: 3px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+    font-size: 0.5rem;
+    margin-bottom: 5px;
+    color: #0077cc;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 1rem;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+#map {
+  width: 100%;
+  height: 20vh;
+  margin: 10px 0;
+}
+
+
+/* Tilaosan tyyli */
+.status {
+  padding: 30px;
+  text-align: center;
+}
+
+.status p {
+  margin: 10px 0;
+  font-size: 1.3em;
+}
+
+
+.login-form {
+    margin-top: 150px; /* Siirtää koko lomakkeen alemmas */
+}
+
+.input-field {
+  width: 10%; /* Leveys suhteessa parent-elementtiin */
+  max-width: 200px; /* Maksimileveys */
+  padding: 10px; /* Sisätyhjä */
+  font-size: 16px; /* Tekstin koko */
+  border: 2px solid #ccc; /* Reunan tyyli */
+  border-radius: 10px; /* Pyöristetyt kulmat */
+}
+

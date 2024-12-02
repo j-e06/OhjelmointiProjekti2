@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Afrikan tähti</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="peli.js" defer></script>
+</head>
+<body>
+    <header>
+
+        <nav>
+            <ul>
+                <li><a href="kirjoudu.html">Login</a></li>
+                <li><a href="peli.html">Peli</a></li>
+                <li><a href="about.html">About </a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <section class="kirjaudu">
+        <div class="kirjaudu_div">
+          <h1>Informatiota Pelistä</h1>
+            <div class="kirjoudu-image"><img src="kirjoudu.jpg" height="100" width="70" alt="kirjoudu image"><img
+                    src="info1.ping.png" height="170" width="9900"/></div>
+
+            <p>Tämä peli vie sinut matkalle Euroopan suurimmille lentokentille. Tarkoituksena on hallita bensa-päästöjä ja oppia samalla lentomatkustamisen ympäristövaikutuksista.</p>
+
+        </div>
+        <div class="kirjaudu_div">
+            <h1>Ohjeita Pelistä</h1>
+            <div class="kirjoudu-image"><img src="kirjoudu.jpg" height="100" width="70" alt="kirjoudu image"><img
+                    src="Screenshot 2024-11-29 101900.png" height="170" width="9900"/></div>
+
+            <p>Terveydenhuoltokategoriassa kolmen kärkeen ylsivät Optomedin lisäksi CGI:n, HUSin ja Planmecan AI Head Analysis -ratkaisu aivoverenvuotojen diagnostiikkaan ja hoitoon sekä Kustannus Oy Duodecimin lääketieteellisten julkaisujen ja tietokantojen hakukone.</p>
+
+        </div>
+    </section>
+
+    <div class="login-form">
+        <input id="username" type="text" placeholder="Käyttäjänimi" class="input-field">
+        <input id="password" type="password" placeholder="Salasana" class="input-field">
+
+        <div class="buttons">
+            <button id="login-button" class="login-button" onclick="login()">Kirjaudu</button>
+            <button id="guest-button" class="guest-button">Pelaa vieraana</button>
+        </div>
+    </div>
+     <section>
+        <h2>Rekisteröidy</h2>
+        <div class="form-group">
+            <label for="register-name">Nimi:</label>
+            <input type="text" id="register-name" placeholder="Anna nimi">
+        </div>
+        <div class="form-group">
+            <label for="register-password">Salasana:</label>
+            <input type="password" id="register-password" placeholder="Anna salasana">
+        </div>
+        <button onclick="register()">Rekisteröidy</button>
+    </section>
+
+    <button id="about-button"></button>
+
+    <div id="map" style="width: 100%; height: 400px;"></div>
+</body>
+</html>
