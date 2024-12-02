@@ -1,5 +1,12 @@
 'use strict';
 
+const game_id = sessionStorage.getItem('game_id')
+console.log(game_id)
+if (game_id == null) {
+    alert("Sinun pitää kirjautua tai rekisteröityä!")
+    window.location.href ='kirjaudu.html'
+}
+
 // Leaflet: Kartan näyttö
 document.addEventListener('DOMContentLoaded', () => {
     const map = L.map('map').setView([60, 24], 6); // Suomen keskikohta, zoom 6
@@ -8,13 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    const game_id = localStorage.getItem('game_id');
 
     load_airports()
 
     async function load_airports(){
         try {
-            const response = await fetch(`http://127.0.0.1:5000/api/check_accessible_airports?game_id=2`);
+            const response = await fetch(`http://127.0.0.1:5000/api/check_accessible_airports?game_id=${game_id}`);
             console.log(response)
             if (!response.ok) {
                 throw new Error(response.status);

@@ -13,9 +13,9 @@ document.getElementById('login-button').addEventListener('click', function () {
       }
       else {
           login()
+          window.location.href = 'peli.html'; // Siirrytään pääsivulle
       }
 
-    window.location.href = 'peli.html'; // Siirrytään pääsivulle
   } else {
     alert('Anna sekä käyttäjänimi että salasana.');
   }
@@ -29,17 +29,14 @@ document.getElementById('login-button').addEventListener('click', function () {
       }
       else {
           const result = await response.json()
-          localStorage.setItem('game_id', result.status.game_id)
+          console.log(result)
+          sessionStorage.setItem('game_id', result)
 
       }
 
   }
 });
 
-document.getElementById('guest-button').addEventListener('click', function () {
-  alert('Pelaat nyt vieraana.');
-  window.location.href = 'peli.html'; // Siirrytään pääsivulle
-});
 
 // 2. Leaflet: Kartan näyttö
 const map = L.map('map', { tap: false }).setView([60, 24], 7);
@@ -67,7 +64,10 @@ async function register() {
         const result = await response.json();
 
         if (response.ok) {
-            alert(`Rekisteröinti onnistui! Pelin ID: ${result.game_id}`);
+            sessionStorage.setItem('game_id', result)
+            alert(`Rekisteröinti onnistui! Pelin ID: ${result}`);
+            window.location.href = 'peli.html'; // Siirrytään pääsivulle
+
         } else {
             alert(`Virhe: ${result.error}`);
         }

@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.esm.js" defer></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.js" defer></script>
-    <script src="peli1.js" defer></script>
+    <script src="main_peli.js" defer></script>
 </head>
 <body>
     <!-- Navigointipalkki -->
@@ -17,9 +17,9 @@
 
         <nav>
             <ul>
-                <li><a href="kirjoudu.html">Login</a></li>
+                <li><a href="kirjaudu.html">Login</a></li>
                 <li><a href="peli.html">Peli</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="about.html" onclick="sessionStorage.clear()">About</a></li>
 
             </ul>
         </nav>
@@ -36,14 +36,14 @@
         <section class="box">
             <h2>Game Status</h2>
             <table>
-                <tr>
+                <!--<tr>
                     <td>CO2 Consumed:</td>
                     <td><span id="consumed">0</span>kg</td>
                 </tr>
                 <tr>
                     <td>CO2 Budget:</td>
                     <td><span id="budget">1000</span>kg</td>
-                </tr>
+                </tr> -->
             </table>
         </section>
         <section class="box">
