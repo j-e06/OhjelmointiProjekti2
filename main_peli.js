@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 L.marker([airport.latitude_deg, airport.longitude_deg])
                     .addTo(map)
                     .bindPopup('<strong>${airport.ident}</strong>')
+                    .on('click', portInfo)
             })
 
         } catch (error) {
@@ -39,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+async function portInfo(){
+    alert("Yahoo")
+}
 
 async function load_game_data() {
     const response = await fetch(`http://127.0.0.1:5000/api/game_details?game_id=${game_id}`);
@@ -54,6 +59,13 @@ async function load_game_data() {
     document.getElementById('starting_airport').textContent = game_data.starting_airport
     document.getElementById('money').textContent = game_data.money
     document.getElementById('fuel').textContent = game_data.fuel
+
+
+    // check if game over!
+    console.log(game_data)
+    if (game_data.diamond == 1 && game_data.location === game_data.starting_airport) {
+        window.location.href = "end_page.html";
+    }
 
 }
 
@@ -72,30 +84,26 @@ async function open_lootbox() {
     }
     const data = await response.json()
     const game_data = data.status
-    console.log(game_data)
+    alert(game_data)
+    location.reload()
+
 }
 
+async function refuel() {
+    const fuel_amount = document.getElementById('fuelamount').value;
+    console.log(fuel_amount)
 
-// Lootboxin avaus
-async function openLootbox() {
-    const gameId = document.getElementById('lootbox-game-id').value;
-    const lootboxType = document.getElementById('lootbox-type').value;
-
-    if (!gameId) {
-        alert('Syötä pelin ID avataksesi lootboxin.');
-        return;
+        const response = await fetch(`http://127.0.0.1:5000/api/refuel?game_id=${game_id}&amount=${fuel_amount}`);
+    if(response.status === 400) {
+        var dataa = await response.json()
+        alert(dataa.status)
+        return
     }
-
-    try {
-        const response = await fetch(`http://127.0.0.1:5000/api/lootbox?gameId=${gameId}&type=${lootboxType}`);
-        const result = await response.json();
-
-        if (response.ok) {
-            alert(`Sait lootboxista: ${result.reward}`);
-        } else {
-            alert(`Virhe: ${result.error}`);
-        }
-    } catch (error) {
-        alert('Virhe lootboxin avauksessa. Tarkista palvelimen yhteys.');
+    else if (response.status !== 200) {
+        throw new Error(response.status);
     }
+    const data = await response.json()
+    const game_data = data.status
+    console.log(game_data)
+    location.reload()
 }

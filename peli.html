@@ -50,11 +50,11 @@
                 </tr>
                 <tr>
                     <td>Money:</td>
-                    <td><span id="money"></span></td>
+                    <td><span id="money"></span> euros</td>
                 </tr>
                 <tr>
                     <td>Fuel:</td>
-                    <td><span id="fuel"></span></td>
+                    <td><span id="fuel"></span> liters</td>
                 </tr>
             </table>
         </section>
@@ -73,6 +73,22 @@
                 </select>
             </div>
             <button onclick="open_lootbox()">Open Lootbox</button>
+
+        </section>
+        <section class="box">
+            <h2>Refuel</h2>
+            <p>
+                <b>
+                Here you can buy some more fuel for yourself!
+<br><br>
+                The price is 1 liter for every 2 euros.
+<br>
+                </b>            </p>
+            <div class="form-group">
+                <label for="fuelamount">Amount of fuel:</label>
+                <input type="number" id="fuelamount" name="fuelamount">
+            </div>
+            <button onclick="refuel()">Refuel</button>
 
         </section>
     </div>
