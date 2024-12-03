@@ -7,14 +7,8 @@ document.getElementById('login-button').addEventListener('click', function () {
 
   if (username && password) {
 
-      const result = login(username, password);
-      if (typeof(result) == null ){
-          alert("Käyttäjänimi tai salasana on väärin.")
-      }
-      else {
-          login()
-          window.location.href = 'peli.html'; // Siirrytään pääsivulle
-      }
+      login(username, password);
+
 
   } else {
     alert('Anna sekä käyttäjänimi että salasana.');
@@ -23,14 +17,20 @@ document.getElementById('login-button').addEventListener('click', function () {
   async function login(username, password) {
 
       const response = await fetch(`http://127.0.0.1:5000/api/login?name=${username}&password=${password}`);
+      console.log("debug1")
 
       if (!response.ok) {
           alert("durr something went wrong", response.status)
+          window.location.href = 'kirjaudu.html'
       }
       else {
           const result = await response.json()
-          console.log(result)
-          sessionStorage.setItem('game_id', result)
+
+          var test = result.status[1];
+          // console.log(test)
+
+          sessionStorage.setItem('game_id', test) // game id
+        window.location.href = 'peli.html'; // Siirrytään pääsivulle
 
       }
 

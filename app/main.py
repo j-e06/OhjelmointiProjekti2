@@ -120,6 +120,7 @@ def login():
     if name and password:
         if len(name) >= 4 and len(password) >= 4:
             result = login_to_game(cursor, name.strip(), password.strip())
+            print(result)
             if result[0] is True:
                 return jsonify({"status": (result[1], result[2])}), 200
             else:
