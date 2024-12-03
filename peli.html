@@ -35,44 +35,45 @@
     <div class="right-container">
         <section class="box">
             <h2>Game Status</h2>
-            <table>
-                <!--<tr>
-                    <td>CO2 Consumed:</td>
-                    <td><span id="consumed">0</span>kg</td>
+            <table id="game_status">
+                <tr>
+                    <td>Player name:</td>
+                    <td><span id="player_name"></span></td>
                 </tr>
                 <tr>
-                    <td>CO2 Budget:</td>
-                    <td><span id="budget">1000</span>kg</td>
-                </tr> -->
-            </table>
-        </section>
-        <section class="box">
-            <h2>Airport Details</h2>
-            <table>
-                <tr>
-                    <td>Temperature:</td>
-                    <td id="airport-temp">10°C</td>
+                    <td>Current location:</td>
+                    <td><span id="location"></span></td>
                 </tr>
                 <tr>
-                    <td>Conditions:</td>
-                    <td id="airport-conditions">Cloudy</td>
+                    <td>Starting airport:</td>
+                    <td><span id="starting_airport"></span></td>
+                </tr>
+                <tr>
+                    <td>Money:</td>
+                    <td><span id="money"></span></td>
+                </tr>
+                <tr>
+                    <td>Fuel:</td>
+                    <td><span id="fuel"></span></td>
                 </tr>
             </table>
         </section>
         <section class="box">
             <h2>Lootbox</h2>
+            <p>
+                <b>Would you like to open the current airports lootbox?</b><br><br>
+                <b>Opening with money will cost: 100 euros.</b><br><br>
+                <b>Opening with fuel will cost: 200 liters.</b>
+            </p>
             <div class="form-group">
-                <label for="lootbox-game-id">Game ID:</label>
-                <input type="number" id="lootbox-game-id" placeholder="Enter Game ID">
-            </div>
-            <div class="form-group">
-                <label for="lootbox-type">Lootbox Type:</label>
+                <label for="lootbox-type">Opening type:</label>
                 <select id="lootbox-type">
                     <option value="money">Money</option>
                     <option value="fuel">Fuel</option>
                 </select>
             </div>
-            <button onclick="openLootbox()">Open Lootbox</button>
+            <button onclick="open_lootbox()">Open Lootbox</button>
+
         </section>
     </div>
 </main>
