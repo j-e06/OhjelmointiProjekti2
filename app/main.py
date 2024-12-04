@@ -36,6 +36,20 @@ def setup_db():
     # run_sql_file(g.cursor, RESET_FILE_PATH)
     #run_sql_file(g.cursor, SQL_FILE_PATH)
 
+@app.route('/api/get_airports', methods=['get'])
+def get_airports():
+    cursor = g.cursor
+
+    args = request.args
+
+    game_id = int(args.get('game_id'))
+
+    airports = get_all_airports(cursor, game_id)
+
+    if len(airports) == 0:
+        return jsonify({"error": "Unable to find airports for given game"}), 400
+
+    return jsonify({'status': airports}), 200
 
 @app.route('/api/get_airport_information', methods=['get'])
 def get_airport_information():

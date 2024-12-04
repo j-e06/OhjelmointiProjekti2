@@ -32,6 +32,13 @@
 
     <main class="main-container">
     <div id="map"></div>
+        <div id="myModal" class="modal" style="display:none">
+              <div class="modal-content">
+                <span class="close">&times;</span><br>
+                  <b>Lentokentän tiedot:</b><br>
+                  <button id="fly" onclick="fly()">Lennä kentälle.</button>
+              </div>
+        </div>
     <div class="right-container">
         <section class="box">
             <h2>Game Status</h2>
@@ -42,11 +49,11 @@
                 </tr>
                 <tr>
                     <td>Current location:</td>
-                    <td><span id="location"></span></td>
+                    <td><span id="location"></span> 🟢</td>
                 </tr>
                 <tr>
                     <td>Starting airport:</td>
-                    <td><span id="starting_airport"></span></td>
+                    <td><span id="starting_airport"></span> 🔴</td>
                 </tr>
                 <tr>
                     <td>Money:</td>

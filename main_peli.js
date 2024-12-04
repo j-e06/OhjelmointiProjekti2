@@ -37,26 +37,28 @@ async function load_game_data(map) {
     document.getElementById('starting_airport').textContent = game_data.starting_airport
     document.getElementById('money').textContent = game_data.money
     document.getElementById('fuel').textContent = game_data.fuel
-    // check if game over!
 
     console.log(game_data)
+    // check if we've won
 
     if (game_data.diamond == 1 && game_data.location === game_data.starting_airport) {
         window.location.href = "end_page.html";
     }
 
+    // check if we've lost
+    // losing is defined by not being able to open lootbox with money or fuel, and not being able to fly?
+
+
+
     try {
-        const response = await fetch(`http://127.0.0.1:5000/api/check_accessible_airports?game_id=${game_id}`);
+        const response = await fetch(`http://127.0.0.1:5000/api/get_airports?game_id=${game_id}`);
         if (!response.ok) {
             throw new Error(response.status);
         }
         const data = await response.json();
-        const airports = data.status;
+        const airports = data;
 
-        // Check if the map instance is valid
-        if (!map || typeof map.addLayer !== 'function') {
-            throw new Error("Invalid map instance");
-        }
+        console.log(airports)
 
         airports.forEach(airport => {
             if (!airport.latitude_deg || !airport.longitude_deg) {
@@ -70,7 +72,6 @@ async function load_game_data(map) {
             if (port_ident == game_data.location) {
                 markerColor = 'green';
             } else if (port_ident == game_data.starting_airport) {
-                console.log(port_ident, game_data.location, game_data.starting_airport)
                 markerColor = 'red';
             } else {
                 markerColor = 'blue'; // Default or unknown status
@@ -106,6 +107,9 @@ async function load_game_data(map) {
         btn.style.hover = "none"
         btn.innerText = "Already opened"
     }
+
+
+
 }
 
 
