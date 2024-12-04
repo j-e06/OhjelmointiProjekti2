@@ -14,38 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    load_game_data();
-
-    load_airports()
+    load_game_data(map);
 
 
-
-    async function load_airports(){
-        try {
-            const response = await fetch(`http://127.0.0.1:5000/api/check_accessible_airports?game_id=${game_id}`);
-            if (!response.ok) {
-                throw new Error(response.status);
-            }
-            const data = await response.json()
-            const airports = data.status
-            airports.forEach(airport => {
-                L.marker([airport.latitude_deg, airport.longitude_deg])
-                    .addTo(map)
-                    .bindPopup('<strong>${airport.ident}</strong>')
-                    .on('click', portInfo)
-            })
-
-        } catch (error) {
-            console.error("failed to load airport data:", error)
-        }
-    }
 });
 
 async function portInfo(){
     alert("Yahoo")
 }
 
-async function load_game_data() {
+async function load_game_data(map) {
     const response = await fetch(`http://127.0.0.1:5000/api/game_details?game_id=${game_id}`);
 
     if (!response.ok) {
@@ -59,14 +37,75 @@ async function load_game_data() {
     document.getElementById('starting_airport').textContent = game_data.starting_airport
     document.getElementById('money').textContent = game_data.money
     document.getElementById('fuel').textContent = game_data.fuel
-
-
     // check if game over!
+
     console.log(game_data)
+
     if (game_data.diamond == 1 && game_data.location === game_data.starting_airport) {
         window.location.href = "end_page.html";
     }
 
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/api/check_accessible_airports?game_id=${game_id}`);
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+        const data = await response.json();
+        const airports = data.status;
+
+        // Check if the map instance is valid
+        if (!map || typeof map.addLayer !== 'function') {
+            throw new Error("Invalid map instance");
+        }
+
+        airports.forEach(airport => {
+            if (!airport.latitude_deg || !airport.longitude_deg) {
+                console.error(`Invalid coordinates for airport: ${airport.ident}`);
+                return;
+            }
+
+            let markerColor;
+            let port_ident = airport.ident;
+            console.log(port_ident, game_data.location, game_data.starting_airport)
+            if (port_ident == game_data.location) {
+                markerColor = 'green';
+            } else if (port_ident == game_data.starting_airport) {
+                console.log(port_ident, game_data.location, game_data.starting_airport)
+                markerColor = 'red';
+            } else {
+                markerColor = 'blue'; // Default or unknown status
+            }
+
+            const customIcon = L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
+                iconSize: [20, 20]
+            });
+
+            // Add marker to map
+            L.marker([airport.latitude_deg, airport.longitude_deg], { icon: customIcon })
+                .addTo(map)
+                .on('click', portInfo);
+        });
+    } catch (error) {
+        console.error("Failed to load airport data:", error);
+    }
+
+    // check if current airports lootbox is opened, if yes, disable button and say "opened"
+
+    var box_info =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${game_data.location}&game_id=${game_id}`);
+    if (!box_info.ok) {
+        throw new Error(box_info.status);
+    }
+    const port_data = await box_info.json()
+    var box_status = port_data[0]['lootbox_status']
+    if (box_status === 1) {
+        var btn = document.getElementById('open_btn')
+        btn.disabled = "true";
+        btn.style.background = "grey"
+        btn.style.hover = "none"
+        btn.innerText = "Already opened"
+    }
 }
 
 
