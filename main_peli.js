@@ -23,31 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function portInfo(e){
 
-    alert("Yahoo")
     document.getElementById('map').style.display = 'none';
     document.getElementById('myModal').style.display = 'block';
+
     const marker = e.target;
     const icao = marker.options.title;
-    var airportscreeninfo =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${icao}&game_id=${game_id}`);
-    const screeninfo = await airportscreeninfo.json()
-    console.log(screeninfo)
-    var icao1 = document.getElementById('location').textContent;
-    var distance =  await fetch(`http://127.0.0.1:5000/api/distance?icao1=${icao}&icao2=${icao1}`);
+
+    var airport_response =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${icao}&game_id=${game_id}`);
+    const airport_info = await airport_response.json()
+
+
+    var current_icao = document.getElementById('location').textContent;
+
+    var distance =  await fetch(`http://127.0.0.1:5000/api/distance?icao1=${current_icao}&icao2=${icao}`);
+
     const distances = await distance.json()
-    console.log(distances)
-    var name = screeninfo[0]['name']
-    var country = screeninfo[0]['iso_country']
-    document.getElementById('country').textContent = country
-    document.getElementById('name').textContent = name
+
+    document.getElementById('country').textContent = airport_info[0]['iso_country']
+    document.getElementById('name').textContent = airport_info[0]['name']
     document.getElementById('icao').textContent = icao
     document.getElementById('distance').textContent = distances.status
+
     document.getElementById('fly').addEventListener('click', async function () {
-        var flying = await fetch(`http://127.0.0.1:5000/api/fly_check?icao_code=${icao}&game_id=${game_id}`)
-        const  flyings = await flying.json()
-        console.log(flyings)
+        var fly_data = await fetch(`http://127.0.0.1:5000/api/fly_check?icao_code=${icao}&game_id=${game_id}`)
+        const flyings = await fly_data.json()
+
         alert(flyings.status)
+
         location.reload()
-})
+    })
+
+    document.getElementById('close').addEventListener('click', function() {
+        document.getElementById('map').style.display = 'block';
+        document.getElementById('myModal').style.display = 'none';
+    })
 }
 
 async function load_game_data(map) {
@@ -72,13 +81,15 @@ async function load_game_data(map) {
         window.location.href = "end_page.html";
     }
 
+
+
     // check if we've lost
     // losing is defined by not being able to open lootbox with money or fuel, and not being able to fly?
 
 
-
     try {
         const response = await fetch(`http://127.0.0.1:5000/api/get_airports?game_id=${game_id}`);
+        console.log(response)
         if (!response.ok) {
             throw new Error(response.status);
         }
@@ -86,20 +97,25 @@ async function load_game_data(map) {
         const airports = data.status;
         console.log(airports)
 
-        airports.forEach(airport => {
+        for (var airport of airports) {
             if (!airport.latitude_deg || !airport.longitude_deg) {
                 console.error(`Invalid coordinates for airport: ${airport.ident}`);
                 return;
             }
 
+            var airport_response =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${airport.ident}&game_id=${game_id}`);
+            const airport_info = await airport_response.json()
+
             let markerColor;
             let port_ident = airport.ident;
-            console.log(port_ident, game_data.location, game_data.starting_airport)
             if (port_ident == game_data.location) {
                 markerColor = 'green';
             } else if (port_ident == game_data.starting_airport) {
                 markerColor = 'red';
-            } else {
+            } else if(airport_info[0].lootbox_status == 1) {
+                markerColor = 'grey';
+            }
+            else {
                 markerColor = 'blue'; // Default or unknown status
             }
 
@@ -114,7 +130,40 @@ async function load_game_data(map) {
                 .addTo(map)
                 .on('click', portInfo);
 
-        });
+        }
+        //airports.forEach(airport => {
+        //    if (!airport.latitude_deg || !airport.longitude_deg) {
+        //        console.error(`Invalid coordinates for airport: ${airport.ident}`);
+        //        return;
+        //    }
+        //
+        //    var airport_response =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${icao}&game_id=${game_id}`);
+        //    const airport_info = await airport_response.json()
+        //
+        //    let markerColor;
+        //    let port_ident = airport.ident;
+        //    console.log(port_ident, game_data.location, game_data.starting_airport)
+        //    if (port_ident == game_data.location) {
+        //        markerColor = 'green';
+        //    } else if (port_ident == game_data.starting_airport) {
+        //        markerColor = 'red';
+        //    }
+        //    else {
+        //        markerColor = 'blue'; // Default or unknown status
+        //    }
+//
+        //    const customIcon = L.divIcon({
+        //        className: 'custom-marker',
+        //        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
+        //        iconSize: [20, 20]
+        //    });
+//
+        //    // Add marker to map
+        //    L.marker([airport.latitude_deg, airport.longitude_deg], { icon: customIcon, title:airport.ident })
+        //        .addTo(map)
+        //        .on('click', portInfo);
+//
+        //});
     } catch (error) {
         console.error("Failed to load airport data:", error);
     }

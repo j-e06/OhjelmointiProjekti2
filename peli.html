@@ -19,7 +19,8 @@
             <ul>
                 <li><a href="kirjaudu.html">Login</a></li>
                 <li><a href="peli.html">Peli</a></li>
-                <li><a href="about.html" onclick="sessionStorage.clear()">About</a></li>
+                <li><a href="about.html"">About</a></li>
+                <li><a href="kirjaudu.html" onclick="sessionStorage.clear()">Kirjaudu ulos</a> </li>
 
             </ul>
         </nav>
@@ -34,7 +35,7 @@
     <div id="map"></div>
         <div id="myModal" class="modal">
               <div class="modal-content">
-                <span class="close">&times;</span><br>
+                <span id="close">&times;</span><br>
                   <b>Lentokentän tiedot:</b><br>
                     <section class="box">
             <h2>Game Status</h2>
@@ -90,7 +91,7 @@
         <section class="box">
             <h2>Lootbox</h2>
             <p>
-                <b>Would you like to open the current airports lootbox?</b><br><br>
+                <b>Would you like to open the current airports lootbox?</b><br><br>Grey marker means that lootbox has already been opened.<br>
             </p>
             <div class="form-group">
                 <label for="lootbox-type">Cost:</label>
