@@ -66,7 +66,7 @@ def fly(cursor, game_id: int, icao_code: str):
         game_details[0].values()
 
     if location == icao_code:
-        return "Cannot fly to the same airport you are currently in."
+        return False, "Cannot fly to the same airport you are currently in."
 
 
     # Convert variables to appropriate types

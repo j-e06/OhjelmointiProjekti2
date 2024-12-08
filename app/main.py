@@ -235,6 +235,27 @@ def lootbox():
     result = lootbox(cursor, lootbox_id)
     return jsonify({"status": result}), 200
 
-
+@app.route('/api/fly_check', methods=['GET'])
+def fly_check():
+    cursor = g.cursor
+    args = request.args
+    game_id = int(args.get("game_id"))
+    icao_code = args.get("icao_code")
+    result = fly(cursor, game_id, icao_code)
+    if result[0] is False:
+        return jsonify({"status": result[1]}), 400
+    else:
+        return jsonify({"status": result[1]}), 200
+@app.route('/api/distance', methods=['GET'])
+def distance():
+    cursor = g.cursor
+    args = request.args
+    icao1 = args.get("icao1")
+    icao2 = args.get("icao2")
+    result = get_distance(cursor, icao1, icao2)
+    if result[0] is False:
+        return jsonify({"status": result[1]}), 400
+    else:
+        return jsonify({"status": result[1]}), 200
 if __name__ == "__main__":
     app.run(debug=True)

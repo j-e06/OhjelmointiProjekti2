@@ -19,8 +19,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-async function portInfo(){
+
+
+async function portInfo(e){
+
     alert("Yahoo")
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('myModal').style.display = 'block';
+    const marker = e.target;
+    const icao = marker.options.title;
+    var airportscreeninfo =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${icao}&game_id=${game_id}`);
+    const screeninfo = await airportscreeninfo.json()
+    console.log(screeninfo)
+    var icao1 = document.getElementById('location').textContent;
+    var distance =  await fetch(`http://127.0.0.1:5000/api/distance?icao1=${icao}&icao2=${icao1}`);
+    const distances = await distance.json()
+    console.log(distances)
+    var name = screeninfo[0]['name']
+    var country = screeninfo[0]['iso_country']
+    document.getElementById('country').textContent = country
+    document.getElementById('name').textContent = name
+    document.getElementById('icao').textContent = icao
+    document.getElementById('distance').textContent = distances.status
+    document.getElementById('fly').addEventListener('click', async function () {
+        var flying = await fetch(`http://127.0.0.1:5000/api/fly_check?icao_code=${icao}&game_id=${game_id}`)
+        const  flyings = await flying.json()
+        console.log(flyings)
+        alert(flyings.status)
+        location.reload()
+})
 }
 
 async function load_game_data(map) {
@@ -56,8 +83,7 @@ async function load_game_data(map) {
             throw new Error(response.status);
         }
         const data = await response.json();
-        const airports = data;
-
+        const airports = data.status;
         console.log(airports)
 
         airports.forEach(airport => {
@@ -84,9 +110,10 @@ async function load_game_data(map) {
             });
 
             // Add marker to map
-            L.marker([airport.latitude_deg, airport.longitude_deg], { icon: customIcon })
+            L.marker([airport.latitude_deg, airport.longitude_deg], { icon: customIcon, title:airport.ident })
                 .addTo(map)
                 .on('click', portInfo);
+
         });
     } catch (error) {
         console.error("Failed to load airport data:", error);
