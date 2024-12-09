@@ -19,15 +19,15 @@
             </ul>
         </nav>
     </header>
-
+<section class="logiin">
 
     <section class="kirjaudu">
         <div class="kirjaudu_div">
-          <h1>Informatiota Pelistä</h1>
-            <div class="kirjoudu-image"><img src="kirjoudu.jpg" height="100" width="70" alt="kirjoudu image"><img
-                    src="info1.ping.png" height="170" width="9900"/></div>
+          <h1></h1>
+            <div class="kirjoudu-image"><img
+                    src="info1.ping.png" height="170" width="9900" style="object-fit: contain"/></div>
 
-            <p>Tässä pelissä on tarkoitus löytää timantti ja päästä takaisin aloituslentokentälle, lentämällä mahdollissiman vähän.</p>
+            <p id="kysymys" >Tehtäväsi on lentää lentokentästä lentokenttään ja etsiä aarteita avaamalla laatikoita. <br><br>Löydätköhän suuren timantin vai loppuukon matkasi rosvolle?</p>
 
         </div>
     </section>
@@ -38,23 +38,10 @@
 
         <div class="buttons">
             <button id="login-button" class="login-button">Kirjaudu</button>
+            <button onclick="register()">Rekisteröidy</button>
         </div>
     </div>
-     <section>
-        <h2>Rekisteröidy</h2>
-        <div class="form-group">
-            <label for="register-name">Nimi:</label>
-            <input type="text" id="register-name" placeholder="Anna nimi">
-        </div>
-        <div class="form-group">
-            <label for="register-password">Salasana:</label>
-            <input type="password" id="register-password" placeholder="Anna salasana">
-        </div>
-        <button onclick="register()">Rekisteröidy</button>
-    </section>
-
-    <button id="about-button"></button>
-
+</section>
     <div id="map" style="width: 100%; height: 400px;"></div>
 </body>
 </html>

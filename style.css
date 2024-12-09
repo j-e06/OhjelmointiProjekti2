@@ -4,19 +4,16 @@
 /* Yleiset tyylit */
 body {
     font-family: Arial, sans-serif;
-    background-color: navajowhite;
     color: blueviolet;
     margin: 0;
     padding: 0;
-    text-align: center;
+
 
 }
 /* Navigointipalkki */
 header {
     background-color: black;
-    color: navajowhite;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
 }
@@ -141,10 +138,24 @@ button:hover {
     justify-content: space-around;
     padding: 20px;
 }
+.logiin {
+            justify-content: center;
+            align-items: center;
+            height: 1rem;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #dddddd;
+            text-align: center;
+            border: 1px solid #ddd;
+
+}
+#kysymys {
+    text-align: center;
+}
 
 .kirjaudu_div {
-    background-color: #eaeaea;
-    width: 30%;
+    background-color: gainsboro;
+    width: 50%;
     text-align: center;
     padding: 15px;
     border-radius: 5px;
@@ -159,7 +170,7 @@ button:hover {
     width: 100%;
     height: 150px;
 
-    color: #ccc;
+    color: #f4f4f9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -249,18 +260,11 @@ body {
   color: white;
 }
 
-.guest-button {
-  background: #f44336;
-  color: white;
-}
 
 .login-button:hover {
   background: #45a049;
 }
 
-.guest-button:hover {
-  background: #e53935;
-}
 /* Päänäkymän otsikko */
 .page-header {
 
@@ -304,8 +308,8 @@ input[type="password"] {
 }
 
 button {
-    padding: 5px 10px;
-    font-size: 1rem;
+    padding: 5px 25px;
+    font-size: 1.1rem;
     background-color: #0077cc;
     color: white;
     border: none;
@@ -339,6 +343,7 @@ button:hover {
 
 .login-form {
     margin-top: 150px; /* Siirtää koko lomakkeen alemmas */
+
 }
 
 .input-field {
