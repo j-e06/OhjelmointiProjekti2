@@ -1,0 +1,49 @@
+
+    <!-- Lopetussivun paikka -->
+    <div id="endPage" style="display:none">
+        <div id="rightSide">
+        <h1 id="endPageTitle"></h1>
+        <div id="leftSide">
+        <img id="endPageImage" src="" alt="">
+        <p>Results:</p>
+        <ul>
+            <li>Fuel Used: <span id="resultFuelUsed"></span></li>
+            <li>Lootboxes Opened: <span id="resultLootboxesOpened"></span></li>
+            <li>Flight Taken: <span id="resultFlightTaken"></span></li>
+        </ul>
+
+        <button onclick="location.href='kirjaudu.html'">Play Again</button>
+    </div>
+   </div>
+</div>
+
+
+//endPage
+function showEndPage(isWinner, results) {
+    const endPage = document.getElementById("endPage");
+    document.getElementById('main-container').style.display = "none";
+    // Päivitä otsikko ja kuva
+    const title = document.getElementById("endPageTitle");
+    const image = document.getElementById("endPageImage");
+
+    if (isWinner) {
+        title.textContent = "Congratulations! You Won!";
+        image.src = "endPage..png";
+        image.alt = "You Won!";
+    } else {
+        title.textContent = "Game Over! You Lost!";
+        image.src = "loser.png";
+        image.alt = "You Lost!";
+    }
+
+    // Päivitä tulokset
+    document.getElementById("resultFuelUsed").textContent = results.fuel_used;
+    document.getElementById("resultLootboxesOpened").textContent = results.lootboxes_opened;
+    document.getElementById("resultFlightTaken").textContent = results.flight_taken;
+
+    // Näytä loppusivu
+    endPage.style.display = "flex";
+}
+const endPage = document.getElementById("endPage");
+endPage.style.display = "flex"; // Näkyviin ja keskitetään sisältö
+
