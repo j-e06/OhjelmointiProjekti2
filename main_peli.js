@@ -84,6 +84,7 @@ async function load_game_data(map) {
 
 
 
+
     // check if we've lost
     // losing is defined by not being able to open lootbox with money or fuel, and not being able to fly?
 
@@ -98,6 +99,8 @@ async function load_game_data(map) {
         const airports = data.status;
         console.log(airports)
 
+        var min_distance = 0;
+
         for (var airport of airports) {
             if (!airport.latitude_deg || !airport.longitude_deg) {
                 console.error(`Invalid coordinates for airport: ${airport.ident}`);
@@ -106,6 +109,17 @@ async function load_game_data(map) {
 
             var airport_response = await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${airport.ident}&game_id=${game_id}`);
             const airport_info = await airport_response.json()
+
+            let dist = await fetch(`http://127.0.0.1:5000/api/distance?icao1=${game_data.location}&icao2=${airport.ident}`);
+
+            let dist_info = await dist.json()
+            //console.log(dist_info.status, game_data.fuel, game_data.money*2, game_data.fuel + game_data.money*2)
+            console.log(game_data.fuel + game_data.money*2,  dist_info.status)
+            if (dist_info.status != 0 && dist_info.status < min_distance) {
+                console.log("test")
+                let min_distance = dist_info.status;
+            }
+
 
             let markerColor;
             let port_ident = airport.ident;
@@ -134,7 +148,10 @@ async function load_game_data(map) {
     } catch (error) {
         console.error("Failed to load airport data:", error);
     }
-
+    console.log(min_distance, game_data.fuel + game_data.money*2)
+    if (min_distance > game_data.fuel + game_data.money*2) {
+        console.log("aww, game over")
+    }
     // check if current airports lootbox is opened, if yes, disable button and say "opened"
 
     var box_info =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${game_data.location}&game_id=${game_id}`);
