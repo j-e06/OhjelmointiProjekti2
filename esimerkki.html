@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats Window</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Button styling */
+        #toggleButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Stats window styling */
+        #statsWindow {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        /* Close button styling */
+        #statsWindow .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Button to toggle stats window -->
+    <button id="toggleButton">Show Stats</button>
+
+    <!-- Stats window -->
+    <div id="statsWindow">
+        <span class="close">&times;</span>
+        <h3>Statistics</h3>
+        <ul>
+            <li>Stat 1: 123</li>
+            <li>Stat 2: 456</li>
+            <li>Stat 3: 789</li>
+        </ul>
+    </div>
+
+    <script>
+        // JavaScript for toggling the stats window
+        const toggleButton = document.getElementById('toggleButton');
+        const statsWindow = document.getElementById('statsWindow');
+        const closeButton = statsWindow.querySelector('.close');
+
+        // Show or hide the stats window when the button is clicked
+        toggleButton.addEventListener('click', () => {
+            if (statsWindow.style.display === 'none' || statsWindow.style.display === '') {
+                statsWindow.style.display = 'block';
+                toggleButton.textContent = 'Hide Stats';
+            } else {
+                statsWindow.style.display = 'none';
+                toggleButton.textContent = 'Show Stats';
+            }
+        });
+
+        // Close the stats window when the close button is clicked
+        closeButton.addEventListener('click', () => {
+            statsWindow.style.display = 'none';
+            toggleButton.textContent = 'Show Stats';
+        });
+    </script>
+</body>
+</html>

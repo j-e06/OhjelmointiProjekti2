@@ -25,12 +25,30 @@
         </nav>
     </header>
 
+    <!-- Lopetussivun paikka -->
+    <div id="endPage" style="display:none">
+        <div id="rightSide">
+        <h1 id="endPageTitle"></h1>
+        <div id="leftSide">
+        <img id="endPageImage" src="" alt="">
+        <p>Results:</p>
+        <ul>
+            <li>Fuel Used: <span id="resultFuelUsed"></span></li>
+            <li>Lootboxes Opened: <span id="resultLootboxesOpened"></span></li>
+            <li>Flight Taken: <span id="resultFlightTaken"></span></li>
+        </ul>
+
+        <button onclick="location.href='kirjaudu.html'">Play Again</button>
+    </div>
+   </div>
+</div>
+
     <!-- Otsikko -->
     <header>
         <h1 class="page-title">Afrikan tähti</h1>
     </header>
 
-    <main class="main-container">
+    <main class="main-container" id="main-container">
     <div id="map"></div>
     <div class="right-container">
         <section class="box">
