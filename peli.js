@@ -20,7 +20,7 @@ document.getElementById('login-button').addEventListener('click', function () {
       console.log("debug1")
 
       if (!response.ok) {
-          alert("durr something went wrong", response.status)
+          alert("No game found with given name or password.")
           window.location.href = 'kirjaudu.html'
       }
       else {
@@ -55,7 +55,7 @@ async function register() {
     const password = document.getElementById('register-password').value;
 
     if (name.length < 4 || password.length < 4) {
-        alert("Nimen ja salasanan tulee olla vähintään 4 merkkiä pitkiä.");
+        alert("Name and password must be at least4 characters long.");
         return;
     }
 
@@ -65,13 +65,13 @@ async function register() {
 
         if (response.ok) {
             sessionStorage.setItem('game_id', result)
-            alert(`Rekisteröinti onnistui! Pelin ID: ${result}`);
+            alert(`Succesfully registered!`);
             window.location.href = 'peli.html'; // Siirrytään pääsivulle
 
         } else {
             alert(`Virhe: ${result.error}`);
         }
     } catch (error) {
-        alert("Virhe rekisteröinnissä. Tarkista API:n yhteys.");
+        alert("Check API connection.");
     }
 }

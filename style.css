@@ -1,4 +1,6 @@
 
+
+
 /* Yleiset tyylit */
 body {
     font-family: Arial, sans-serif;
@@ -173,34 +175,74 @@ button:hover {
     text-align: left;
 }
 
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+/* Button styling */
+#toggleButton {
+            position: fixed;
+            top: 10px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+/* Stats window styling */
+#statsWindow {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    width: 30px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 1px;
+        }
+
+        /* Close button styling */
+        #statsWindow .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #555;
+        }
+
+
 
 .abouts {
+    display: flex;
     background-color: #eaeaea;
-    width: 50%;
-    text-align: center;
-    padding: 65px;
-    border-radius: 15px;
+    gap: 40px; /* Lisää tilaa elementtien väliin */
+
+    text-align: left;
+    padding: 100px;
+    border-radius: 10px;
 }
 
 .about h2 {
     font-size: 1.3em;
-    padding-bottom: 990px;
+    padding-bottom: 590px;
+
 }
 
-.about .about-image {
-    width: 70%;
-    height: 450px;
-
-    color: #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.7em;
-    margin-bottom: 30px;
+.abouts img {
+    width: 40vw;
+    margin-bottom: 45px;
+    border-radius: 8px; /* Lisää pyöristetyt kulmat */
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); /* Varjostus */
+    flex: 4; /* Kuvan skaalautuminen */
+    max-width: 600px;
+      height: 550px; /* Kiinteä korkeus */
 }
-
-
-
 
 .login-button {
   background: #4caf50;
@@ -282,6 +324,7 @@ button:hover {
 }
 
 
+
 /* Tilaosan tyyli */
 .status {
   padding: 30px;
@@ -307,3 +350,74 @@ button:hover {
   border-radius: 10px; /* Pyöristetyt kulmat */
 }
 
+
+ /* endPage kattaa koko näytön */
+#endPage {
+    display: flex; /* Järjestää sisällön vaakasuoraan */
+    align-items: center; /* Kohdistaa elementit pystysuunnassa keskelle */
+    justify-content: center; /* Kohdistaa elementit vaakasuunnassa keskelle */
+    width: 100%;
+    height: 10990vh; /* Käytä koko näkymän korkeus */
+    background-color: rgba(240, 240, 240, 1); /* Vaalea taustaväri */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Kuva vasemmalla */
+#leftSide {
+    flex: 0; /* Käytä 50% tilasta */
+    display: flex;
+    justify-content: center; /* Keskittää kuvan vaakasuunnassa */
+    align-items: center; /* Keskittää kuvan pystysuunnassa */
+
+}
+
+#endPageImage {
+    max-width: 100%; /* Rajaa kuvan leveys */
+    height: auto;
+}
+
+/* Teksti ja nappi oikealla */
+#rightSide {
+    flex: 1; /* Käytä 50% tilasta */
+    display: flex;
+    flex-direction: column; /* Järjestä elementit pystysuunnassa */
+    justify-content: center; /* Keskittää tekstin ja napin pystysuunnassa */
+    align-items: flex-start; /* Kohdistaa tekstin vasemmalle */
+    padding-left: 20px;
+}
+
+#endPageTitle {
+    font-size: 2rem;
+    margin-bottom: 20px; /* Väli otsikon ja tulosten väliin */
+}
+
+#rightSide p {
+    font-size: 1.5rem;
+    margin-bottom: 10px; /* Väli "Results"-tekstin ja listan väliin */
+}
+
+#rightSide ul {
+    list-style: none; /* Poistaa pisteet listalta */
+    padding: 0;
+    margin-bottom: 20px; /* Väli listan ja napin väliin */
+}
+
+#rightSide li {
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+
+#rightSide button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#rightSide button:hover {
+    background-color: #0056b3;
+}

@@ -62,6 +62,7 @@ async function portInfo(e){
 async function load_game_data(map) {
     const response = await fetch(`http://127.0.0.1:5000/api/game_details?game_id=${game_id}`);
 
+
     if (!response.ok) {
         throw new Error(response.status);
     }
@@ -78,7 +79,7 @@ async function load_game_data(map) {
     // check if we've won
 
     if (game_data.diamond == 1 && game_data.location === game_data.starting_airport) {
-        window.location.href = "end_page.html";
+        await showEndPage(true)
     }
 
 
@@ -103,7 +104,7 @@ async function load_game_data(map) {
                 return;
             }
 
-            var airport_response =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${airport.ident}&game_id=${game_id}`);
+            var airport_response = await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${airport.ident}&game_id=${game_id}`);
             const airport_info = await airport_response.json()
 
             let markerColor;
@@ -112,10 +113,9 @@ async function load_game_data(map) {
                 markerColor = 'green';
             } else if (port_ident == game_data.starting_airport) {
                 markerColor = 'red';
-            } else if(airport_info[0].lootbox_status == 1) {
+            } else if (airport_info[0].lootbox_status == 1) {
                 markerColor = 'grey';
-            }
-            else {
+            } else {
                 markerColor = 'blue'; // Default or unknown status
             }
 
@@ -126,44 +126,11 @@ async function load_game_data(map) {
             });
 
             // Add marker to map
-            L.marker([airport.latitude_deg, airport.longitude_deg], { icon: customIcon, title:airport.ident })
+            L.marker([airport.latitude_deg, airport.longitude_deg], {icon: customIcon, title: airport.ident})
                 .addTo(map)
                 .on('click', portInfo);
 
         }
-        //airports.forEach(airport => {
-        //    if (!airport.latitude_deg || !airport.longitude_deg) {
-        //        console.error(`Invalid coordinates for airport: ${airport.ident}`);
-        //        return;
-        //    }
-        //
-        //    var airport_response =  await fetch(`http://127.0.0.1:5000/api/get_airport_information?icao_code=${icao}&game_id=${game_id}`);
-        //    const airport_info = await airport_response.json()
-        //
-        //    let markerColor;
-        //    let port_ident = airport.ident;
-        //    console.log(port_ident, game_data.location, game_data.starting_airport)
-        //    if (port_ident == game_data.location) {
-        //        markerColor = 'green';
-        //    } else if (port_ident == game_data.starting_airport) {
-        //        markerColor = 'red';
-        //    }
-        //    else {
-        //        markerColor = 'blue'; // Default or unknown status
-        //    }
-//
-        //    const customIcon = L.divIcon({
-        //        className: 'custom-marker',
-        //        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
-        //        iconSize: [20, 20]
-        //    });
-//
-        //    // Add marker to map
-        //    L.marker([airport.latitude_deg, airport.longitude_deg], { icon: customIcon, title:airport.ident })
-        //        .addTo(map)
-        //        .on('click', portInfo);
-//
-        //});
     } catch (error) {
         console.error("Failed to load airport data:", error);
     }
@@ -226,3 +193,45 @@ async function refuel() {
     console.log(game_data)
     location.reload()
 }
+
+
+//endPage
+async function showEndPage(isWinner) {
+    const endPage = document.getElementById("endPage");
+    document.getElementById('main-container').style.display = "none";
+    // Päivitä otsikko ja kuva
+    const title = document.getElementById("endPageTitle");
+    const image = document.getElementById("endPageImage");
+
+
+    const game_response = await fetch(`http://127.0.0.1:5000/api/game_details?game_id=${game_id}`);
+
+    if (!game_response.ok) {
+        throw new Error("shit")
+    }
+
+    var data = await game_response.json()
+
+    var game_data = data.status[0]
+
+    if (isWinner) {
+        title.textContent = "Congratulations! You Won!";
+        image.src = "endPage..png";
+        image.alt = "You Won!";
+    } else {
+        title.textContent = "Game Over! You Lost!";
+        image.src = "loser.png";
+        image.alt = "You Lost!";
+    }
+
+    // Päivitä tulokset
+    console.log(game_data, "yahoooo")
+    document.getElementById("resultFuelUsed").textContent = game_data.fuel_used;
+    document.getElementById("resultLootboxesOpened").textContent = game_data.lootboxes_opened;
+    document.getElementById("resultFlightTaken").textContent = game_data.flights_taken;
+
+    // Näytä loppusivu
+    endPage.style.display = "flex";
+}
+
+

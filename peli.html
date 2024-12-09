@@ -19,7 +19,7 @@
             <ul>
                 <li><a href="kirjaudu.html">Login</a></li>
                 <li><a href="peli.html">Peli</a></li>
-                <li><a href="about.html"">About</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="kirjaudu.html" onclick="sessionStorage.clear()">Kirjaudu ulos</a> </li>
 
             </ul>
@@ -31,7 +31,25 @@
         <h1 class="page-title">Afrikan tähti</h1>
     </header>
 
-    <main class="main-container">
+    <!-- Lopetussivun paikka -->
+    <div id="endPage" style="display:none">
+        <div id="rightSide">
+        <h1 id="endPageTitle"></h1>
+        <div id="leftSide">
+        <img id="endPageImage" src="" alt="">
+        <p>Results:</p>
+        <ul>
+            <li>Fuel Used: <span id="resultFuelUsed"></span></li>
+            <li>Lootboxes Opened: <span id="resultLootboxesOpened"></span></li>
+            <li>Flight Taken: <span id="resultFlightTaken"></span></li>
+        </ul>
+
+        <button onclick="location.href='kirjaudu.html';sessionStorage.clear()">Play Again</button>
+    </div>
+   </div>
+</div>
+
+    <main class="main-container" id="main-container">
     <div id="map"></div>
         <div id="myModal" class="modal">
               <div class="modal-content">
