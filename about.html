@@ -16,6 +16,11 @@
                 <li><a href="kirjaudu.html">Login</a></li>
                 <li><a href="peli.html">Peli</a></li>
                 <li><a href="about.html">About </a></li>
+                <script >
+                    if (sessionStorage.getItem('game_id') != null) {
+                        document.getElementById('xd').innerHTML += '<li><a href="kirjaudu.html" onclick="sessionStorage.clear()">Kirjaudu ulos</a> </li>'
+                    }
+                </script>
             </ul>
         </nav>
     </header>

@@ -50,9 +50,14 @@ document.getElementById('about-button').addEventListener('click', function () {
   alert('Tavoitteenasi on lentää ympäristöystävällisesti ja oppia samalla lentomatkailun vaikutuksista.');
 });
 //4.rekisteröitymiseen
+
+
+document.getElementById('registerbtn').addEventListener('click', async function() {
+    register()
+})
 async function register() {
-    const name = document.getElementById('register-name').value;
-    const password = document.getElementById('register-password').value;
+    const name = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
     if (name.length < 4 || password.length < 4) {
         alert("Name and password must be at least4 characters long.");
